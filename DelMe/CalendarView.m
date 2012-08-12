@@ -14,7 +14,8 @@
 @interface CalendarView ()
 
 @property (nonatomic, strong) NSMutableDictionary *monthViews;
-@property (nonatomic, strong) UIScrollView *monthContainerView;
+@property (nonatomic, strong) UIView *monthContainerView;
+@property (nonatomic, strong) UIView *monthContainerViewContentView;
 @property (nonatomic, strong) CalenderMonthSelectorView *monthSelectorView;
 
 @end
@@ -66,14 +67,17 @@
     [self.monthSelectorView.backButton addTarget:self action:@selector(didTapMonthBack:) forControlEvents:UIControlEventTouchUpInside];
     [self.monthSelectorView.forwardButton addTarget:self action:@selector(didTapMonthForward:) forControlEvents:UIControlEventTouchUpInside];
 
+    // Month views are contained in a content view inside a container view - like a scroll view, but not a scroll view so we can have proper control over animations
     CGRect frame = self.bounds;
     frame.origin.y = CGRectGetMaxY(self.monthSelectorView.frame);
     frame.size.height -= frame.origin.y;
-    self.monthContainerView = [[UIScrollView alloc] initWithFrame:frame];
+    self.monthContainerView = [[UIView alloc] initWithFrame:frame];
     self.monthContainerView.clipsToBounds = YES;
     self.monthContainerView.backgroundColor = [UIColor redColor];
-    self.monthContainerView.panGestureRecognizer.enabled = NO;
     [self addSubview:self.monthContainerView];
+    
+    self.monthContainerViewContentView = [[UIView alloc] initWithFrame:self.monthContainerView.bounds];
+    [self.monthContainerView addSubview:self.monthContainerViewContentView];
     
     self.monthViews = [[NSMutableDictionary alloc] init];
 
@@ -126,13 +130,14 @@
     if (monthView == nil) {
         monthView = [[CalendarMonthView alloc] initWithMonth:month dayViewSize:_dayViewSize];
         [self.monthViews setObject:monthView forKey:monthViewKey];
-        [self.monthContainerView addSubview:monthView];
+        [self.monthContainerViewContentView addSubview:monthView];
     }
     
     return monthView;
 }
 
 - (void)positionDayViewsForMonth:(NSDateComponents*)month fromMonth:(NSDateComponents*)fromMonth {
+    self.userInteractionEnabled = NO;
     fromMonth = [fromMonth copy];
     month = [month copy];
     
@@ -140,17 +145,19 @@
     CGFloat startingVerticalPostion = 0;
     CGFloat restingVerticalPosition = 0;
     CGFloat restingHeight = 0;
+    
     NSComparisonResult monthComparisonResult = [month.date compare:fromMonth.date];
     NSTimeInterval animationDuration = (monthComparisonResult == NSOrderedSame) ? 0.0 : 0.5;
     
     NSMutableArray *activeMonthViews = [[NSMutableArray alloc] init];
     
+    // Create and position the month views for the final month and those around it
     for (NSInteger monthOffset = -2; monthOffset <= 2; monthOffset += 1) {
         NSDateComponents *offsetMonth = [month copy];
         offsetMonth.month = offsetMonth.month + monthOffset;
         offsetMonth = [offsetMonth.calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSCalendarCalendarUnit fromDate:offsetMonth.date];
         
-        // Check if this month should overlap the previous month
+        // If this isn't the first month view we've created, check if this month should overlap the previous month
         if (monthOffset > -2 && offsetMonth.weekday - offsetMonth.calendar.firstWeekday != 0) {
             nextVerticalPosition -= _dayViewSize.height;
         }
@@ -163,6 +170,7 @@
         nextVerticalPosition += frame.size.height;
         monthView.frame = frame;
 
+        // Check if this view is where we should animate to or from
         if (monthOffset == 0) {
             restingVerticalPosition = monthView.frame.origin.y;
             restingHeight = monthView.bounds.size.height;
@@ -175,8 +183,7 @@
         }
     }
     
-    self.monthContainerView.contentSize = CGSizeMake(self.monthContainerView.bounds.size.width, nextVerticalPosition);
-    
+    // Remove any old month views we don't need anymore
     NSArray *monthViewKeyes = self.monthViews.allKeys;
     for (NSString *key in monthViewKeyes) {
         UIView *monthView = [self.monthViews objectForKey:key];
@@ -186,21 +193,32 @@
         }
     }
     
+    // Position the content view to show where we're animating from
     if (monthComparisonResult != NSOrderedSame) {
-        [self.monthContainerView setContentOffset:CGPointMake(0, startingVerticalPostion) animated:NO];
+        CGRect frame = self.monthContainerViewContentView.frame;
+        frame.origin.y = -startingVerticalPostion;
+        self.monthContainerViewContentView.frame = frame;
     }
     
     [UIView animateWithDuration:animationDuration delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.monthContainerView.contentOffset = CGPointMake(0, restingVerticalPosition);
+        // Animate the content view to show the target month
+        CGRect frame = self.monthContainerViewContentView.frame;
+        frame.origin.y = -restingVerticalPosition;
+        self.monthContainerViewContentView.frame = frame;
         
-        CGRect frame = self.monthContainerView.frame;
+        // Resize the container view to show the height of the target month
+        frame = self.monthContainerView.frame;
         frame.size.height = restingHeight;
         self.monthContainerView.frame = frame;
         
+        // Resize the our frame to show the height of the target month
         frame = self.frame;
         frame.size.height = CGRectGetMaxY(self.monthContainerView.frame);
         self.frame = frame;
     } completion:^(BOOL finished) {
+        if (finished) {
+            self.userInteractionEnabled = YES;
+        }
     }];
 }
 
