@@ -322,8 +322,9 @@
     
     NSDateComponents *month = [touchedView.day.calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSCalendarCalendarUnit fromDate:touchedView.day.date];
     if (month.year != self.visibleMonth.year || month.month != self.visibleMonth.month) {
-        NSDateComponents *fromMonth = self.visibleMonth;
-        self.visibleMonth = month;
+        NSDateComponents *fromMonth = [self.visibleMonth copy];
+        self.visibleMonth.month = month.month;
+        self.visibleMonth.year = month.year;
         
         [self updateMonthLabelMonth:self.visibleMonth];
         [self positionDayViewsForMonth:self.visibleMonth fromMonth:fromMonth];
