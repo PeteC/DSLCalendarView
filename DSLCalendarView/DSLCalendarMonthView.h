@@ -31,6 +31,7 @@
 
 
 @class DSLCalendarDayView;
+@class DSLCalendarRange;
 
 
 @interface DSLCalendarMonthView : UIView
@@ -42,6 +43,7 @@
 - (id)initWithMonth:(NSDateComponents*)month dayViewSize:(CGSize)dayViewSize;
 
 - (DSLCalendarDayView*)dayViewForDay:(NSDateComponents*)day;
+- (void)updateDaySelectionStatesForRange:(DSLCalendarRange*)range;
 
 @end
 

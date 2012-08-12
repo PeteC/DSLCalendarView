@@ -125,9 +125,7 @@
     _selectedRange = selectedRange;
     
     for (DSLCalendarMonthView *monthView in self.monthViews.allValues) {
-        for (DSLCalendarDayView *dayView in monthView.dayViews) {
-            dayView.selected = [self.selectedRange containsDay:dayView.day];
-        }
+        [monthView updateDaySelectionStatesForRange:self.selectedRange];
     }
 }
 
@@ -178,9 +176,7 @@
         [self.monthViews setObject:monthView forKey:monthViewKey];
         [self.monthContainerViewContentView addSubview:monthView];
 
-        for (DSLCalendarDayView *dayView in monthView.dayViews) {
-            dayView.selected = [self.selectedRange containsDay:dayView.day];
-        }
+        [monthView updateDaySelectionStatesForRange:self.selectedRange];
     }
     
     return monthView;

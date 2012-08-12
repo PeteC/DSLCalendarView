@@ -32,6 +32,7 @@
 
 #import "DSLCalendarDayView.h"
 #import "DSLCalendarMonthView.h"
+#import "DSLCalendarRange.h"
 
 
 @interface DSLCalendarMonthView ()
@@ -120,6 +121,30 @@
     self.frame = CGRectMake(0, 0, _dayViewSize.width * numberOfDaysPerWeek, nextDayViewOrigin.y);
 }
 
+- (void)updateDaySelectionStatesForRange:(DSLCalendarRange*)range {
+    for (DSLCalendarDayView *dayView in self.dayViews) {
+        if ([range containsDay:dayView.day]) {
+            BOOL isStartOfRange = [range.startDay isEqual:dayView.day];
+            BOOL isEndOfRange = [range.endDay isEqual:dayView.day];
+            
+            if (isStartOfRange && isEndOfRange) {
+                dayView.selectionState = DSLCalendarDayViewWholeSelection;
+            }
+            else if (isStartOfRange) {
+                dayView.selectionState = DSLCalendarDayViewStartOfSelection;
+            }
+            else if (isEndOfRange) {
+                dayView.selectionState = DSLCalendarDayViewEndOfSelection;
+            }
+            else {
+                dayView.selectionState = DSLCalendarDayViewWithinSelection;
+            }
+        }
+        else {
+            dayView.selectionState = DSLCalendarDayViewNotSelected;
+        }
+    }
+}
 
 #pragma mark - Properties
 

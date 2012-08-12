@@ -78,9 +78,9 @@
 
 #pragma mark - Properties
 
-- (void)setSelected:(BOOL)selected {
-    _selected = selected;
-    self.selectedView.hidden = !selected;
+- (void)setSelectionState:(DSLCalendarDayViewSelectionState)selectionState {
+    _selectionState = selectionState;
+    self.selectedView.hidden = selectionState == DSLCalendarDayViewNotSelected;
 }
 
 - (NSString*)text {
