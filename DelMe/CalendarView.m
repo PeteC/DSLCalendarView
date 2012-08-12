@@ -73,7 +73,6 @@
     frame.size.height -= frame.origin.y;
     self.monthContainerView = [[UIView alloc] initWithFrame:frame];
     self.monthContainerView.clipsToBounds = YES;
-    self.monthContainerView.backgroundColor = [UIColor redColor];
     [self addSubview:self.monthContainerView];
     
     self.monthContainerViewContentView = [[UIView alloc] initWithFrame:self.monthContainerView.bounds];
