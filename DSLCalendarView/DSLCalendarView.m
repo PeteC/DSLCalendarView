@@ -121,6 +121,14 @@
 
 #pragma mark - Properties
 
++ (Class)monthViewClass {
+    return [DSLCalendarMonthView class];
+}
+
++ (Class)dayViewClass {
+    return [DSLCalendarDayView class];
+}
+
 - (void)setSelectedRange:(DSLCalendarRange *)selectedRange {
     _selectedRange = selectedRange;
     
@@ -172,7 +180,7 @@
     NSString *monthViewKey = [self monthViewKeyForMonth:month];
     DSLCalendarMonthView *monthView = [self.monthViews objectForKey:monthViewKey];
     if (monthView == nil) {
-        monthView = [[DSLCalendarMonthView alloc] initWithMonth:month dayViewSize:_dayViewSize];
+        monthView = [[[[self class] monthViewClass] alloc] initWithMonth:month dayViewClass:[[self class] dayViewClass] dayViewSize:_dayViewSize];
         [self.monthViews setObject:monthView forKey:monthViewKey];
         [self.monthContainerViewContentView addSubview:monthView];
 

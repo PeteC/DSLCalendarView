@@ -44,6 +44,7 @@
 
 @implementation DSLCalendarMonthView {
     CGSize _dayViewSize;
+    __strong Class _dayViewClass;
 }
 
 
@@ -56,13 +57,14 @@
 #pragma mark - Initialisation
 
 // Designated initialiser
-- (id)initWithMonth:(NSDateComponents *)month dayViewSize:(CGSize)dayViewSize {
+- (id)initWithMonth:(NSDateComponents*)month dayViewClass:(Class)dayViewClass dayViewSize:(CGSize)dayViewSize {
     self = [super init];
     if (self != nil) {
         // Initialise properties
         _month = [month copy];
         _dayViewSize = dayViewSize;
         _dayViewsDictionary = [[NSMutableDictionary alloc] init];
+        _dayViewClass = dayViewClass;
         
         [self createDayViews];
     }
@@ -99,7 +101,7 @@
                 dayFrame.origin = nextDayViewOrigin;
                 dayFrame.size = _dayViewSize;
                 
-                DSLCalendarDayView *dayView = [[DSLCalendarDayView alloc] initWithFrame:dayFrame];
+                DSLCalendarDayView *dayView = [[_dayViewClass alloc] initWithFrame:dayFrame];
                 dayView.day = day;
                 [self.dayViewsDictionary setObject:dayView forKey:[self dayViewKeyForDay:day]];
                 [self addSubview:dayView];

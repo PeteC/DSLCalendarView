@@ -40,7 +40,7 @@
 @property (nonatomic, strong, readonly) NSSet *dayViews;
 
 // Designated initialiser
-- (id)initWithMonth:(NSDateComponents*)month dayViewSize:(CGSize)dayViewSize;
+- (id)initWithMonth:(NSDateComponents*)month dayViewClass:(Class)dayViewClass dayViewSize:(CGSize)dayViewSize;
 
 - (DSLCalendarDayView*)dayViewForDay:(NSDateComponents*)day;
 - (void)updateDaySelectionStatesForRange:(DSLCalendarRange*)range;
