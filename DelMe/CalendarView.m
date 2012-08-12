@@ -61,7 +61,7 @@
 }
 
 - (void)commonInit {
-    _dayViewSize = CGSizeMake(floorf(self.bounds.size.width / 7.0), 40);
+    _dayViewSize = CGSizeMake(floorf(self.bounds.size.width / 7.0), 44);
     CGFloat monthPadding = self.bounds.size.width - (_dayViewSize.width * 7.0);
     monthPadding = floorf(monthPadding / 2.0);
     
@@ -232,6 +232,13 @@
     }
     
     [UIView animateWithDuration:animationDuration delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        for (NSInteger index = 0; index < activeMonthViews.count; index++) {
+            CalendarMonthView *monthView = [activeMonthViews objectAtIndex:index];
+             for (CalendarDayView *dayView in monthView.dayViews) {
+                 dayView.inCurrentMonth = (index == 2);
+             }
+        }
+        
         // Animate the content view to show the target month
         CGRect frame = self.monthContainerViewContentView.frame;
         frame.origin.y = -restingVerticalPosition;
@@ -343,16 +350,22 @@
     
     // Work out which day view was touched. We can't just use hit test on a root view because the month views can overlap
     UITouch *touch = [touches anyObject];
-    CalendarDayView *touchedView = nil;
     for (CalendarMonthView *monthView in self.monthViews.allValues) {
         UIView *view = [monthView hitTest:[touch locationInView:monthView] withEvent:nil];
-        if ([view isKindOfClass:[CalendarDayView class]]) {
-            touchedView = (CalendarDayView*)view;
-            break;
+        if (view == nil) {
+            continue;
+        }
+        
+        while (view != monthView) {
+            if ([view isKindOfClass:[CalendarDayView class]]) {
+                return (CalendarDayView*)view;
+            }
+            
+            view = view.superview;
         }
     }
     
-    return touchedView;
+    return nil;
 }
 
 @end

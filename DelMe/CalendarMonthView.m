@@ -66,7 +66,7 @@
 
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = @"d";
-
+    
     do {
         for (NSInteger column = startColumn; column < numberOfDaysPerWeek; column++) {
             if (day.month == self.month.month) {

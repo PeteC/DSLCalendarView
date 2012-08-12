@@ -11,6 +11,10 @@
 
 @interface CalendarDayView ()
 
+@property (nonatomic, strong) UIView *adjacentMonthView;
+@property (nonatomic, strong) UIView *selectedView;
+@property (nonatomic, strong) UILabel *label;
+
 @end
 
 
@@ -29,6 +33,19 @@
     self = [super initWithFrame:frame];
     if (self != nil) {
         self.backgroundColor = [UIColor whiteColor];
+        
+        _adjacentMonthView = [[UIView alloc] initWithFrame:self.bounds];
+        _adjacentMonthView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
+        [self addSubview:_adjacentMonthView];
+        
+        _selectedView = [[UIView alloc] initWithFrame:self.bounds];
+        _selectedView.backgroundColor = [UIColor yellowColor];
+        [self addSubview:_selectedView];
+
+        _label = [[UILabel alloc] initWithFrame:self.bounds];
+        _label.backgroundColor = [UIColor clearColor];
+        _label.textAlignment = UITextAlignmentCenter;
+        [self addSubview:_label];
     }
     
     return self;
@@ -38,26 +55,21 @@
 #pragma mark - Properties
 
 - (void)setSelected:(BOOL)selected {
-    if (selected != _selected) {
-        _selected = selected;
-        [self setNeedsDisplay];
-    }
+    _selected = selected;
+    self.selectedView.hidden = !selected;
 }
 
+- (NSString*)text {
+    return self.label.text;
+}
 
-#pragma mark -
+- (void)setText:(NSString *)text {
+    self.label.text = text;
+}
 
-- (void)drawRect:(CGRect)rect {
-    if (self.isSelected) {
-        [[UIColor yellowColor] setFill];
-    }
-    else {
-        [self.backgroundColor setFill];
-    }
-    UIRectFill(self.bounds);
-    
-    [[UIColor blackColor] setFill];
-    [self.text drawInRect:self.bounds withFont:[UIFont systemFontOfSize:17] lineBreakMode:UILineBreakModeClip alignment:UITextAlignmentCenter];
+- (void)setInCurrentMonth:(BOOL)inCurrentMonth {
+    _inCurrentMonth = inCurrentMonth;
+    self.adjacentMonthView.alpha = inCurrentMonth ? 0.0 : 1.0;
 }
 
 @end
