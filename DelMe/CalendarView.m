@@ -7,18 +7,22 @@
 //
 
 #import "CalenderMonthSelectorView.h"
+#import "CalendarMonthView.h"
 #import "CalendarView.h"
 
 
 @interface CalendarView ()
 
-@property (nonatomic, copy) NSDictionary *dayViews;
+@property (nonatomic, strong) NSMutableDictionary *monthViews;
+@property (nonatomic, strong) UIScrollView *monthContainerView;
 @property (nonatomic, strong) CalenderMonthSelectorView *monthSelectorView;
 
 @end
 
 
-@implementation CalendarView
+@implementation CalendarView {
+    CGSize _dayViewSize;
+}
 
 
 #pragma mark - Memory management
@@ -50,41 +54,56 @@
 }
 
 - (void)commonInit {
-    self.dayViews = [NSDictionary dictionary];
+    _dayViewSize = CGSizeMake(floorf(self.bounds.size.width / 7.0), 40);
     
-    self.visibleMonth = [[NSCalendar currentCalendar] components:NSYearCalendarUnit | NSMonthCalendarUnit fromDate:[NSDate date]];
-    self.visibleMonth.calendar = [NSCalendar currentCalendar];
+    self.visibleMonth = [[NSCalendar currentCalendar] components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSCalendarCalendarUnit fromDate:[NSDate date]];
+    self.visibleMonth.day = 1;
     
     self.monthSelectorView = [CalenderMonthSelectorView view];
+    self.monthSelectorView.backgroundColor = [UIColor clearColor];
     [self addSubview:self.monthSelectorView];
     
     [self.monthSelectorView.backButton addTarget:self action:@selector(didTapMonthBack:) forControlEvents:UIControlEventTouchUpInside];
     [self.monthSelectorView.forwardButton addTarget:self action:@selector(didTapMonthForward:) forControlEvents:UIControlEventTouchUpInside];
+
+    CGRect frame = self.bounds;
+    frame.origin.y = CGRectGetMaxY(self.monthSelectorView.frame);
+    frame.size.height -= frame.origin.y;
+    self.monthContainerView = [[UIScrollView alloc] initWithFrame:frame];
+    self.monthContainerView.clipsToBounds = YES;
+    self.monthContainerView.backgroundColor = [UIColor redColor];
+    self.monthContainerView.panGestureRecognizer.enabled = NO;
+    [self addSubview:self.monthContainerView];
     
+    self.monthViews = [[NSMutableDictionary alloc] init];
+
     [self updateMonthLabelMonth:self.visibleMonth];
-    [self positionDayViewsForMonth:self.visibleMonth animated:NO];
+    [self positionDayViewsForMonth:self.visibleMonth fromMonth:self.visibleMonth];
 }
 
 
 #pragma mark - Events
 
 - (void)didTapMonthBack:(id)sender {
+    NSDateComponents *fromMonth = [self.visibleMonth copy];
     [self.visibleMonth setMonth:self.visibleMonth.month - 1];
+    
     [self updateMonthLabelMonth:self.visibleMonth];
+    [self positionDayViewsForMonth:self.visibleMonth fromMonth:fromMonth];
 }
 
 - (void)didTapMonthForward:(id)sender {
+    NSDateComponents *fromMonth = [self.visibleMonth copy];
     [self.visibleMonth setMonth:self.visibleMonth.month + 1];
+
     [self updateMonthLabelMonth:self.visibleMonth];
+    [self positionDayViewsForMonth:self.visibleMonth fromMonth:fromMonth];
 }
 
 
 #pragma mark - 
 
 - (void)updateMonthLabelMonth:(NSDateComponents*)month {
-    [self firstVisiblealendarDayForMonth:month];
-    
-    
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = @"MMMM yyyy";
     
@@ -94,70 +113,93 @@
     self.monthSelectorView.titleLabel.text = [formatter stringFromDate:date];
 }
 
-- (NSString*)dayViewKeyForDay:(NSDateComponents*)day {
-    return [NSString stringWithFormat:@"%d.%d.%d", day.year, day.month, day.day];
+- (NSString*)monthViewKeyForMonth:(NSDateComponents*)month {
+    month = [month.calendar components:NSYearCalendarUnit | NSMonthCalendarUnit fromDate:month.date];
+    return [NSString stringWithFormat:@"%d.%d", month.year, month.month];
 }
 
-- (NSDateComponents*)firstVisiblealendarDayForMonth:(NSDateComponents*)month {
-    NSDateComponents *firstDay = [[NSDateComponents alloc] init];
+- (CalendarMonthView*)cachedOrCreatedMonthViewForMonth:(NSDateComponents*)month {
+    month = [month.calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSCalendarCalendarUnit fromDate:month.date];
 
-    firstDay.calendar = month.calendar;
-    firstDay.day = 1;
-    firstDay.month = month.month;
-    firstDay.year = month.year;
-    NSDate *firstDate = [firstDay.calendar dateFromComponents:firstDay];
+    NSString *monthViewKey = [self monthViewKeyForMonth:month];
+    CalendarMonthView *monthView = [self.monthViews objectForKey:monthViewKey];
+    if (monthView == nil) {
+        monthView = [[CalendarMonthView alloc] initWithMonth:month dayViewSize:_dayViewSize];
+        [self.monthViews setObject:monthView forKey:monthViewKey];
+        [self.monthContainerView addSubview:monthView];
+    }
     
-    firstDay = [firstDay.calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSCalendarCalendarUnit fromDate:firstDate];
-    firstDay.day -= firstDay.weekday - firstDay.calendar.firstWeekday;
-
-    return firstDay;
+    return monthView;
 }
 
-- (void)positionDayViewsForMonth:(NSDateComponents*)month animated:(BOOL)animated {
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"d";
+- (void)positionDayViewsForMonth:(NSDateComponents*)month fromMonth:(NSDateComponents*)fromMonth {
+    fromMonth = [fromMonth copy];
+    month = [month copy];
     
-    NSMutableDictionary *activeDayViews = [NSMutableDictionary dictionary];
-    CGSize dayViewSize = CGSizeMake(floorf(self.bounds.size.width / 7.0), 30);
+    CGFloat nextVerticalPosition = 0;
+    CGFloat startingVerticalPostion = 0;
+    CGFloat restingVerticalPosition = 0;
+    CGFloat restingHeight = 0;
+    NSComparisonResult monthComparisonResult = [month.date compare:fromMonth.date];
+    NSTimeInterval animationDuration = (monthComparisonResult == NSOrderedSame) ? 0.0 : 0.5;
     
-    CGFloat duration = animated ? 0.5 : 0.0;
+    NSMutableArray *activeMonthViews = [[NSMutableArray alloc] init];
     
-    [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationCurveEaseInOut animations:^{
-        NSDateComponents *day = [self firstVisiblealendarDayForMonth:month];
-        CGPoint nextDayViewOrigin = CGPointMake(0, CGRectGetMaxY(self.monthSelectorView.frame));
-
-        do {
-            for (NSInteger column = 0; column < 7; column++) {
-                CGRect dayFrame = CGRectZero;
-                dayFrame.origin = nextDayViewOrigin;
-                dayFrame.size = dayViewSize;
-                
-                NSString *dayViewKey = [self dayViewKeyForDay:day];
-                UIView *dayView = [self.dayViews objectForKey:dayViewKey];
-                if (dayView == nil) {
-                    dayView = [[UILabel alloc] initWithFrame:dayFrame];
-                    [self addSubview:dayView];
-                    
-                    [(UILabel*)dayView setText:[formatter stringFromDate:day.date]];
-                    [(UILabel*)dayView setTextAlignment:UITextAlignmentCenter];
-                }
-                else {
-                    dayView.frame = dayFrame;
-                }
-                
-                [activeDayViews setObject:dayView forKey:dayViewKey];
-                
-                day.day = day.day + 1;
-                day = [day.calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSCalendarCalendarUnit fromDate:day.date];
-                
-                nextDayViewOrigin.x += dayViewSize.width;
-            }
-            
-            nextDayViewOrigin.x = 0;
-            nextDayViewOrigin.y += dayViewSize.height;
-        } while (day.month == month.month);
+    for (NSInteger monthOffset = -2; monthOffset <= 2; monthOffset += 1) {
+        NSDateComponents *offsetMonth = [month copy];
+        offsetMonth.month = offsetMonth.month + monthOffset;
+        offsetMonth = [offsetMonth.calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSCalendarCalendarUnit fromDate:offsetMonth.date];
         
-        self.dayViews = activeDayViews;
+        // Check if this month should overlap the previous month
+        if (monthOffset > -2 && offsetMonth.weekday - offsetMonth.calendar.firstWeekday != 0) {
+            nextVerticalPosition -= _dayViewSize.height;
+        }
+        
+        CalendarMonthView *monthView = [self cachedOrCreatedMonthViewForMonth:offsetMonth];
+        [activeMonthViews addObject:monthView];
+        
+        CGRect frame = monthView.frame;
+        frame.origin.y = nextVerticalPosition;
+        nextVerticalPosition += frame.size.height;
+        monthView.frame = frame;
+
+        if (monthOffset == 0) {
+            restingVerticalPosition = monthView.frame.origin.y;
+            restingHeight = monthView.bounds.size.height;
+        }
+        else if (monthOffset == 1 && monthComparisonResult == NSOrderedAscending) {
+            startingVerticalPostion = monthView.frame.origin.y;
+        }
+        else if (monthOffset == -1 && monthComparisonResult == NSOrderedDescending) {
+            startingVerticalPostion = monthView.frame.origin.y;
+        }
+    }
+    
+    self.monthContainerView.contentSize = CGSizeMake(self.monthContainerView.bounds.size.width, nextVerticalPosition);
+    
+    NSArray *monthViewKeyes = self.monthViews.allKeys;
+    for (NSString *key in monthViewKeyes) {
+        UIView *monthView = [self.monthViews objectForKey:key];
+        if (![activeMonthViews containsObject:monthView]) {
+            [monthView removeFromSuperview];
+            [self.monthViews removeObjectForKey:key];
+        }
+    }
+    
+    if (monthComparisonResult != NSOrderedSame) {
+        [self.monthContainerView setContentOffset:CGPointMake(0, startingVerticalPostion) animated:NO];
+    }
+    
+    [UIView animateWithDuration:animationDuration delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        self.monthContainerView.contentOffset = CGPointMake(0, restingVerticalPosition);
+        
+        CGRect frame = self.monthContainerView.frame;
+        frame.size.height = restingHeight;
+        self.monthContainerView.frame = frame;
+        
+        frame = self.frame;
+        frame.size.height = CGRectGetMaxY(self.monthContainerView.frame);
+        self.frame = frame;
     } completion:^(BOOL finished) {
     }];
 }

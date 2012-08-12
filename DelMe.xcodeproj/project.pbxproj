@@ -19,6 +19,7 @@
 		B56B9EFE15D3B8E3005DEF84 /* CalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = B56B9EFD15D3B8E3005DEF84 /* CalendarView.m */; };
 		B56B9F0215D3B902005DEF84 /* CalenderMonthSelectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = B56B9F0115D3B902005DEF84 /* CalenderMonthSelectorView.m */; };
 		B56B9F0415D3BA53005DEF84 /* CalenderMonthSelectorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B56B9F0315D3BA53005DEF84 /* CalenderMonthSelectorView.xib */; };
+		B5A24DA815D6C0D500F07396 /* CalendarMonthView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A24DA715D6C0D500F07396 /* CalendarMonthView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,8 @@
 		B56B9F0015D3B902005DEF84 /* CalenderMonthSelectorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalenderMonthSelectorView.h; sourceTree = "<group>"; };
 		B56B9F0115D3B902005DEF84 /* CalenderMonthSelectorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalenderMonthSelectorView.m; sourceTree = "<group>"; };
 		B56B9F0315D3BA53005DEF84 /* CalenderMonthSelectorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CalenderMonthSelectorView.xib; sourceTree = "<group>"; };
+		B5A24DA615D6C0D500F07396 /* CalendarMonthView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarMonthView.h; sourceTree = "<group>"; };
+		B5A24DA715D6C0D500F07396 /* CalendarMonthView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarMonthView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +104,8 @@
 				B56B9F0015D3B902005DEF84 /* CalenderMonthSelectorView.h */,
 				B56B9F0115D3B902005DEF84 /* CalenderMonthSelectorView.m */,
 				B56B9F0315D3BA53005DEF84 /* CalenderMonthSelectorView.xib */,
+				B5A24DA615D6C0D500F07396 /* CalendarMonthView.h */,
+				B5A24DA715D6C0D500F07396 /* CalendarMonthView.m */,
 			);
 			path = DelMe;
 			sourceTree = "<group>";
@@ -185,6 +190,7 @@
 				B558021215D1943800D9149F /* ViewController.m in Sources */,
 				B56B9EFE15D3B8E3005DEF84 /* CalendarView.m in Sources */,
 				B56B9F0215D3B902005DEF84 /* CalenderMonthSelectorView.m in Sources */,
+				B5A24DA815D6C0D500F07396 /* CalendarMonthView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
