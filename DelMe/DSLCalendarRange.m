@@ -6,15 +6,15 @@
 //  Copyright 2012 Pete Callaway. All rights reserved.
 //
 
-#import "CalendarRange.h"
+#import "DSLCalendarRange.h"
 
 
-@interface CalendarRange ()
+@interface DSLCalendarRange ()
 
 @end
 
 
-@implementation CalendarRange
+@implementation DSLCalendarRange
 
 
 #pragma mark - Memory management

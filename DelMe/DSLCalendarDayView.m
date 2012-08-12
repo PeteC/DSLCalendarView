@@ -6,10 +6,10 @@
 //  Copyright 2012 Pete Callaway. All rights reserved.
 //
 
-#import "CalendarDayView.h"
+#import "DSLCalendarDayView.h"
 
 
-@interface CalendarDayView ()
+@interface DSLCalendarDayView ()
 
 @property (nonatomic, strong) UIView *adjacentMonthView;
 @property (nonatomic, strong) UIView *selectedView;
@@ -18,7 +18,7 @@
 @end
 
 
-@implementation CalendarDayView
+@implementation DSLCalendarDayView
 
 
 #pragma mark - Memory management

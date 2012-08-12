@@ -6,14 +6,14 @@
 //  Copyright 2012 Pete Callaway. All rights reserved.
 //
 
-#import "CalendarDayView.h"
-#import "CalenderMonthSelectorView.h"
-#import "CalendarMonthView.h"
-#import "CalendarView.h"
-#import "CalendarDayView.h"
+#import "DSLCalendarDayView.h"
+#import "DSLCalenderMonthSelectorView.h"
+#import "DSLCalendarMonthView.h"
+#import "DSLCalendarView.h"
+#import "DSLCalendarDayView.h"
 
 
-@interface CalendarView ()
+@interface DSLCalendarView ()
 
 @property (nonatomic, copy) NSDateComponents *draggingFixedDay;
 @property (nonatomic, copy) NSDateComponents *draggingStartDay;
@@ -22,12 +22,12 @@
 @property (nonatomic, strong) NSMutableDictionary *monthViews;
 @property (nonatomic, strong) UIView *monthContainerView;
 @property (nonatomic, strong) UIView *monthContainerViewContentView;
-@property (nonatomic, strong) CalenderMonthSelectorView *monthSelectorView;
+@property (nonatomic, strong) DSLCalenderMonthSelectorView *monthSelectorView;
 
 @end
 
 
-@implementation CalendarView {
+@implementation DSLCalendarView {
     CGSize _dayViewSize;
 }
 
@@ -68,7 +68,7 @@
     self.visibleMonth = [[NSCalendar currentCalendar] components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSCalendarCalendarUnit fromDate:[NSDate date]];
     self.visibleMonth.day = 1;
     
-    self.monthSelectorView = [CalenderMonthSelectorView view];
+    self.monthSelectorView = [DSLCalenderMonthSelectorView view];
     self.monthSelectorView.backgroundColor = [UIColor clearColor];
     [self addSubview:self.monthSelectorView];
     
@@ -97,11 +97,11 @@
 
 #pragma mark - Properties
 
-- (void)setSelectedRange:(CalendarRange *)selectedRange {
+- (void)setSelectedRange:(DSLCalendarRange *)selectedRange {
     _selectedRange = selectedRange;
     
-    for (CalendarMonthView *monthView in self.monthViews.allValues) {
-        for (CalendarDayView *dayView in monthView.dayViews) {
+    for (DSLCalendarMonthView *monthView in self.monthViews.allValues) {
+        for (DSLCalendarDayView *dayView in monthView.dayViews) {
             dayView.selected = [self.selectedRange containsDay:dayView.day];
         }
     }
@@ -144,17 +144,17 @@
     return [NSString stringWithFormat:@"%d.%d", month.year, month.month];
 }
 
-- (CalendarMonthView*)cachedOrCreatedMonthViewForMonth:(NSDateComponents*)month {
+- (DSLCalendarMonthView*)cachedOrCreatedMonthViewForMonth:(NSDateComponents*)month {
     month = [month.calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSCalendarCalendarUnit fromDate:month.date];
 
     NSString *monthViewKey = [self monthViewKeyForMonth:month];
-    CalendarMonthView *monthView = [self.monthViews objectForKey:monthViewKey];
+    DSLCalendarMonthView *monthView = [self.monthViews objectForKey:monthViewKey];
     if (monthView == nil) {
-        monthView = [[CalendarMonthView alloc] initWithMonth:month dayViewSize:_dayViewSize];
+        monthView = [[DSLCalendarMonthView alloc] initWithMonth:month dayViewSize:_dayViewSize];
         [self.monthViews setObject:monthView forKey:monthViewKey];
         [self.monthContainerViewContentView addSubview:monthView];
 
-        for (CalendarDayView *dayView in monthView.dayViews) {
+        for (DSLCalendarDayView *dayView in monthView.dayViews) {
             dayView.selected = [self.selectedRange containsDay:dayView.day];
         }
     }
@@ -188,7 +188,7 @@
             nextVerticalPosition -= _dayViewSize.height;
         }
         
-        CalendarMonthView *monthView = [self cachedOrCreatedMonthViewForMonth:offsetMonth];
+        DSLCalendarMonthView *monthView = [self cachedOrCreatedMonthViewForMonth:offsetMonth];
         [activeMonthViews addObject:monthView];
         [monthView.superview bringSubviewToFront:monthView];
 
@@ -233,8 +233,8 @@
     
     [UIView animateWithDuration:animationDuration delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         for (NSInteger index = 0; index < activeMonthViews.count; index++) {
-            CalendarMonthView *monthView = [activeMonthViews objectAtIndex:index];
-             for (CalendarDayView *dayView in monthView.dayViews) {
+            DSLCalendarMonthView *monthView = [activeMonthViews objectAtIndex:index];
+             for (DSLCalendarDayView *dayView in monthView.dayViews) {
                  dayView.inCurrentMonth = (index == 2);
              }
         }
@@ -264,7 +264,7 @@
 #pragma mark - Touches
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    CalendarDayView *touchedView = [self dayViewForTouches:touches];
+    DSLCalendarDayView *touchedView = [self dayViewForTouches:touches];
     if (touchedView == nil) {
         self.draggingStartDay = nil;
         return;
@@ -275,10 +275,10 @@
     self.draggedOffStartDay = NO;
     
     if (self.selectedRange == nil) {
-        self.selectedRange = [[CalendarRange alloc] initWithStartDay:touchedView.day endDay:touchedView.day];
+        self.selectedRange = [[DSLCalendarRange alloc] initWithStartDay:touchedView.day endDay:touchedView.day];
     }
     else if (![self.selectedRange.startDay isEqual:touchedView.day] && ![self.selectedRange.endDay isEqual:touchedView.day]) {
-        self.selectedRange = [[CalendarRange alloc] initWithStartDay:touchedView.day endDay:touchedView.day];
+        self.selectedRange = [[DSLCalendarRange alloc] initWithStartDay:touchedView.day endDay:touchedView.day];
     }
     else if ([self.selectedRange.startDay isEqual:touchedView.day]) {
         self.draggingFixedDay = self.selectedRange.endDay;
@@ -293,17 +293,17 @@
         return;
     }
     
-    CalendarDayView *touchedView = [self dayViewForTouches:touches];
+    DSLCalendarDayView *touchedView = [self dayViewForTouches:touches];
     if (touchedView == nil) {
         self.draggingStartDay = nil;
         return;
     }
     
     if ([touchedView.day.date compare:self.draggingFixedDay.date] == NSOrderedAscending) {
-        self.selectedRange = [[CalendarRange alloc] initWithStartDay:touchedView.day endDay:self.draggingFixedDay];
+        self.selectedRange = [[DSLCalendarRange alloc] initWithStartDay:touchedView.day endDay:self.draggingFixedDay];
     }
     else {
-        self.selectedRange = [[CalendarRange alloc] initWithStartDay:self.draggingFixedDay endDay:touchedView.day];
+        self.selectedRange = [[DSLCalendarRange alloc] initWithStartDay:self.draggingFixedDay endDay:touchedView.day];
     }
     
     if (!self.draggedOffStartDay) {
@@ -318,14 +318,14 @@
         return;
     }
     
-    CalendarDayView *touchedView = [self dayViewForTouches:touches];
+    DSLCalendarDayView *touchedView = [self dayViewForTouches:touches];
     if (touchedView == nil) {
         self.draggingStartDay = nil;
         return;
     }
     
     if (!self.draggedOffStartDay && [self.draggingStartDay isEqual:touchedView.day]) {
-        self.selectedRange = [[CalendarRange alloc] initWithStartDay:touchedView.day endDay:touchedView.day];
+        self.selectedRange = [[DSLCalendarRange alloc] initWithStartDay:touchedView.day endDay:touchedView.day];
     }
     
     self.draggingStartDay = nil;
@@ -343,22 +343,22 @@
 }
 
 
-- (CalendarDayView*)dayViewForTouches:(NSSet*)touches {
+- (DSLCalendarDayView*)dayViewForTouches:(NSSet*)touches {
     if (touches.count != 1) {
         return nil;
     }
     
     // Work out which day view was touched. We can't just use hit test on a root view because the month views can overlap
     UITouch *touch = [touches anyObject];
-    for (CalendarMonthView *monthView in self.monthViews.allValues) {
+    for (DSLCalendarMonthView *monthView in self.monthViews.allValues) {
         UIView *view = [monthView hitTest:[touch locationInView:monthView] withEvent:nil];
         if (view == nil) {
             continue;
         }
         
         while (view != monthView) {
-            if ([view isKindOfClass:[CalendarDayView class]]) {
-                return (CalendarDayView*)view;
+            if ([view isKindOfClass:[DSLCalendarDayView class]]) {
+                return (DSLCalendarDayView*)view;
             }
             
             view = view.superview;

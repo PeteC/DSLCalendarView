@@ -7,7 +7,7 @@
 //
 
 
-@interface CalenderMonthSelectorView : UIView
+@interface DSLCalenderMonthSelectorView : UIView
 
 @property (nonatomic, weak) IBOutlet UIButton *backButton;
 @property (nonatomic, weak) IBOutlet UIButton *forwardButton;

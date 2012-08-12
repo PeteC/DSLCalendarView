@@ -7,7 +7,7 @@
 //
 
 
-@interface CalendarRange : NSObject
+@interface DSLCalendarRange : NSObject
 
 @property (nonatomic, copy) NSDateComponents *startDay;
 @property (nonatomic, copy) NSDateComponents *endDay;

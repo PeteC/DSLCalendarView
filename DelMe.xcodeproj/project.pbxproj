@@ -16,12 +16,12 @@
 		B558021215D1943800D9149F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B558021115D1943800D9149F /* ViewController.m */; };
 		B558021515D1943800D9149F /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B558021315D1943800D9149F /* ViewController.xib */; };
 		B558021C15D1944A00D9149F /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B558021B15D1944A00D9149F /* AssetsLibrary.framework */; };
-		B56B9EFE15D3B8E3005DEF84 /* CalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = B56B9EFD15D3B8E3005DEF84 /* CalendarView.m */; };
-		B56B9F0215D3B902005DEF84 /* CalenderMonthSelectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = B56B9F0115D3B902005DEF84 /* CalenderMonthSelectorView.m */; };
-		B56B9F0415D3BA53005DEF84 /* CalenderMonthSelectorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B56B9F0315D3BA53005DEF84 /* CalenderMonthSelectorView.xib */; };
-		B5A24DA815D6C0D500F07396 /* CalendarMonthView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A24DA715D6C0D500F07396 /* CalendarMonthView.m */; };
-		B5A24DAC15D7ECE200F07396 /* CalendarDayView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A24DAB15D7ECE200F07396 /* CalendarDayView.m */; };
-		B5A24DAF15D7F7C500F07396 /* CalendarRange.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A24DAE15D7F7C500F07396 /* CalendarRange.m */; };
+		B56B9EFE15D3B8E3005DEF84 /* DSLCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = B56B9EFD15D3B8E3005DEF84 /* DSLCalendarView.m */; };
+		B56B9F0215D3B902005DEF84 /* DSLCalenderMonthSelectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = B56B9F0115D3B902005DEF84 /* DSLCalenderMonthSelectorView.m */; };
+		B56B9F0415D3BA53005DEF84 /* DSLCalenderMonthSelectorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B56B9F0315D3BA53005DEF84 /* DSLCalenderMonthSelectorView.xib */; };
+		B5A24DA815D6C0D500F07396 /* DSLCalendarMonthView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A24DA715D6C0D500F07396 /* DSLCalendarMonthView.m */; };
+		B5A24DAC15D7ECE200F07396 /* DSLCalendarDayView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A24DAB15D7ECE200F07396 /* DSLCalendarDayView.m */; };
+		B5A24DAF15D7F7C500F07396 /* DSLCalendarRange.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A24DAE15D7F7C500F07396 /* DSLCalendarRange.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,17 +39,17 @@
 		B558021115D1943800D9149F /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; wrapsLines = 0; };
 		B558021415D1943800D9149F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
 		B558021B15D1944A00D9149F /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
-		B56B9EFC15D3B8E3005DEF84 /* CalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarView.h; sourceTree = "<group>"; };
-		B56B9EFD15D3B8E3005DEF84 /* CalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarView.m; sourceTree = "<group>"; wrapsLines = 0; };
-		B56B9F0015D3B902005DEF84 /* CalenderMonthSelectorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalenderMonthSelectorView.h; sourceTree = "<group>"; };
-		B56B9F0115D3B902005DEF84 /* CalenderMonthSelectorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalenderMonthSelectorView.m; sourceTree = "<group>"; };
-		B56B9F0315D3BA53005DEF84 /* CalenderMonthSelectorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CalenderMonthSelectorView.xib; sourceTree = "<group>"; };
-		B5A24DA615D6C0D500F07396 /* CalendarMonthView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarMonthView.h; sourceTree = "<group>"; };
-		B5A24DA715D6C0D500F07396 /* CalendarMonthView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarMonthView.m; sourceTree = "<group>"; };
-		B5A24DAA15D7ECE200F07396 /* CalendarDayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarDayView.h; sourceTree = "<group>"; };
-		B5A24DAB15D7ECE200F07396 /* CalendarDayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarDayView.m; sourceTree = "<group>"; };
-		B5A24DAD15D7F7C500F07396 /* CalendarRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarRange.h; sourceTree = "<group>"; };
-		B5A24DAE15D7F7C500F07396 /* CalendarRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarRange.m; sourceTree = "<group>"; };
+		B56B9EFC15D3B8E3005DEF84 /* DSLCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSLCalendarView.h; sourceTree = "<group>"; };
+		B56B9EFD15D3B8E3005DEF84 /* DSLCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSLCalendarView.m; sourceTree = "<group>"; wrapsLines = 0; };
+		B56B9F0015D3B902005DEF84 /* DSLCalenderMonthSelectorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSLCalenderMonthSelectorView.h; sourceTree = "<group>"; };
+		B56B9F0115D3B902005DEF84 /* DSLCalenderMonthSelectorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSLCalenderMonthSelectorView.m; sourceTree = "<group>"; };
+		B56B9F0315D3BA53005DEF84 /* DSLCalenderMonthSelectorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DSLCalenderMonthSelectorView.xib; sourceTree = "<group>"; };
+		B5A24DA615D6C0D500F07396 /* DSLCalendarMonthView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSLCalendarMonthView.h; sourceTree = "<group>"; };
+		B5A24DA715D6C0D500F07396 /* DSLCalendarMonthView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSLCalendarMonthView.m; sourceTree = "<group>"; };
+		B5A24DAA15D7ECE200F07396 /* DSLCalendarDayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSLCalendarDayView.h; sourceTree = "<group>"; };
+		B5A24DAB15D7ECE200F07396 /* DSLCalendarDayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSLCalendarDayView.m; sourceTree = "<group>"; };
+		B5A24DAD15D7F7C500F07396 /* DSLCalendarRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSLCalendarRange.h; sourceTree = "<group>"; };
+		B5A24DAE15D7F7C500F07396 /* DSLCalendarRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSLCalendarRange.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,17 +105,17 @@
 				B558021115D1943800D9149F /* ViewController.m */,
 				B558021315D1943800D9149F /* ViewController.xib */,
 				B558020515D1943800D9149F /* Supporting Files */,
-				B56B9EFC15D3B8E3005DEF84 /* CalendarView.h */,
-				B56B9EFD15D3B8E3005DEF84 /* CalendarView.m */,
-				B56B9F0015D3B902005DEF84 /* CalenderMonthSelectorView.h */,
-				B56B9F0115D3B902005DEF84 /* CalenderMonthSelectorView.m */,
-				B56B9F0315D3BA53005DEF84 /* CalenderMonthSelectorView.xib */,
-				B5A24DA615D6C0D500F07396 /* CalendarMonthView.h */,
-				B5A24DA715D6C0D500F07396 /* CalendarMonthView.m */,
-				B5A24DAA15D7ECE200F07396 /* CalendarDayView.h */,
-				B5A24DAB15D7ECE200F07396 /* CalendarDayView.m */,
-				B5A24DAD15D7F7C500F07396 /* CalendarRange.h */,
-				B5A24DAE15D7F7C500F07396 /* CalendarRange.m */,
+				B56B9EFC15D3B8E3005DEF84 /* DSLCalendarView.h */,
+				B56B9EFD15D3B8E3005DEF84 /* DSLCalendarView.m */,
+				B56B9F0015D3B902005DEF84 /* DSLCalenderMonthSelectorView.h */,
+				B56B9F0115D3B902005DEF84 /* DSLCalenderMonthSelectorView.m */,
+				B56B9F0315D3BA53005DEF84 /* DSLCalenderMonthSelectorView.xib */,
+				B5A24DA615D6C0D500F07396 /* DSLCalendarMonthView.h */,
+				B5A24DA715D6C0D500F07396 /* DSLCalendarMonthView.m */,
+				B5A24DAA15D7ECE200F07396 /* DSLCalendarDayView.h */,
+				B5A24DAB15D7ECE200F07396 /* DSLCalendarDayView.m */,
+				B5A24DAD15D7F7C500F07396 /* DSLCalendarRange.h */,
+				B5A24DAE15D7F7C500F07396 /* DSLCalendarRange.m */,
 			);
 			path = DelMe;
 			sourceTree = "<group>";
@@ -184,7 +184,7 @@
 			files = (
 				B558020915D1943800D9149F /* InfoPlist.strings in Resources */,
 				B558021515D1943800D9149F /* ViewController.xib in Resources */,
-				B56B9F0415D3BA53005DEF84 /* CalenderMonthSelectorView.xib in Resources */,
+				B56B9F0415D3BA53005DEF84 /* DSLCalenderMonthSelectorView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,11 +198,11 @@
 				B558020B15D1943800D9149F /* main.m in Sources */,
 				B558020F15D1943800D9149F /* AppDelegate.m in Sources */,
 				B558021215D1943800D9149F /* ViewController.m in Sources */,
-				B56B9EFE15D3B8E3005DEF84 /* CalendarView.m in Sources */,
-				B56B9F0215D3B902005DEF84 /* CalenderMonthSelectorView.m in Sources */,
-				B5A24DA815D6C0D500F07396 /* CalendarMonthView.m in Sources */,
-				B5A24DAC15D7ECE200F07396 /* CalendarDayView.m in Sources */,
-				B5A24DAF15D7F7C500F07396 /* CalendarRange.m in Sources */,
+				B56B9EFE15D3B8E3005DEF84 /* DSLCalendarView.m in Sources */,
+				B56B9F0215D3B902005DEF84 /* DSLCalenderMonthSelectorView.m in Sources */,
+				B5A24DA815D6C0D500F07396 /* DSLCalendarMonthView.m in Sources */,
+				B5A24DAC15D7ECE200F07396 /* DSLCalendarDayView.m in Sources */,
+				B5A24DAF15D7F7C500F07396 /* DSLCalendarRange.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

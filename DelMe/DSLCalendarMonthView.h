@@ -6,10 +6,10 @@
 //  Copyright 2012 Pete Callaway. All rights reserved.
 //
 
-@class CalendarDayView;
+@class DSLCalendarDayView;
 
 
-@interface CalendarMonthView : UIView
+@interface DSLCalendarMonthView : UIView
 
 @property (nonatomic, copy, readonly) NSDateComponents *month;
 @property (nonatomic, strong, readonly) NSSet *dayViews;
@@ -17,7 +17,7 @@
 // Designated initialiser
 - (id)initWithMonth:(NSDateComponents*)month dayViewSize:(CGSize)dayViewSize;
 
-- (CalendarDayView*)dayViewForDay:(NSDateComponents*)day;
+- (DSLCalendarDayView*)dayViewForDay:(NSDateComponents*)day;
 
 @end
 

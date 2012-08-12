@@ -7,7 +7,7 @@
 //
 
 
-@interface CalendarDayView : UIView
+@interface DSLCalendarDayView : UIView
 
 @property (nonatomic, copy) NSDateComponents *day;
 @property (nonatomic, copy) NSString *text;

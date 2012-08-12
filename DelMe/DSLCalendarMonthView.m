@@ -6,18 +6,18 @@
 //  Copyright 2012 Pete Callaway. All rights reserved.
 //
 
-#import "CalendarDayView.h"
-#import "CalendarMonthView.h"
+#import "DSLCalendarDayView.h"
+#import "DSLCalendarMonthView.h"
 
 
-@interface CalendarMonthView ()
+@interface DSLCalendarMonthView ()
 
 @property (nonatomic, strong) NSMutableDictionary *dayViewsDictionary;
 
 @end
 
 
-@implementation CalendarMonthView {
+@implementation DSLCalendarMonthView {
     CGSize _dayViewSize;
 }
 
@@ -74,7 +74,7 @@
                 dayFrame.origin = nextDayViewOrigin;
                 dayFrame.size = _dayViewSize;
                 
-                CalendarDayView *dayView = [[CalendarDayView alloc] initWithFrame:dayFrame];
+                DSLCalendarDayView *dayView = [[DSLCalendarDayView alloc] initWithFrame:dayFrame];
                 dayView.day = day;
                 [self.dayViewsDictionary setObject:dayView forKey:[self dayViewKeyForDay:day]];
                 [self addSubview:dayView];
@@ -108,7 +108,7 @@
     return [NSString stringWithFormat:@"%d.%d.%d", day.year, day.month, day.day];
 }
 
-- (CalendarDayView*)dayViewForDay:(NSDateComponents*)day {
+- (DSLCalendarDayView*)dayViewForDay:(NSDateComponents*)day {
     return [self.dayViewsDictionary objectForKey:[self dayViewKeyForDay:day]];
 }
 

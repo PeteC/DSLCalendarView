@@ -6,15 +6,15 @@
 //  Copyright 2012 Pete Callaway. All rights reserved.
 //
 
-#import "CalenderMonthSelectorView.h"
+#import "DSLCalenderMonthSelectorView.h"
 
 
-@interface CalenderMonthSelectorView ()
+@interface DSLCalenderMonthSelectorView ()
 
 @end
 
 
-@implementation CalenderMonthSelectorView
+@implementation DSLCalenderMonthSelectorView
 
 
 #pragma mark - Memory management

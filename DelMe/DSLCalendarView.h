@@ -6,12 +6,12 @@
 //  Copyright 2012 Pete Callaway. All rights reserved.
 //
 
-#import "CalendarRange.h"
+#import "DSLCalendarRange.h"
 
 
-@interface CalendarView : UIView
+@interface DSLCalendarView : UIView
 
 @property (nonatomic, strong) NSDateComponents *visibleMonth;
-@property (nonatomic, strong) CalendarRange *selectedRange;
+@property (nonatomic, strong) DSLCalendarRange *selectedRange;
 
 @end
