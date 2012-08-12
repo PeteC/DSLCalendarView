@@ -6,12 +6,18 @@
 //  Copyright 2012 Pete Callaway. All rights reserved.
 //
 
+#import "CalendarDayView.h"
 #import "CalenderMonthSelectorView.h"
 #import "CalendarMonthView.h"
 #import "CalendarView.h"
+#import "CalendarDayView.h"
 
 
 @interface CalendarView ()
+
+@property (nonatomic, copy) NSDateComponents *draggingFixedDay;
+@property (nonatomic, copy) NSDateComponents *draggingStartDay;
+@property (nonatomic, assign) BOOL draggedOffStartDay;
 
 @property (nonatomic, strong) NSMutableDictionary *monthViews;
 @property (nonatomic, strong) UIView *monthContainerView;
@@ -85,6 +91,19 @@
 }
 
 
+#pragma mark - Properties
+
+- (void)setSelectedRange:(CalendarRange *)selectedRange {
+    _selectedRange = selectedRange;
+    
+    for (CalendarMonthView *monthView in self.monthViews.allValues) {
+        for (CalendarDayView *dayView in monthView.dayViews) {
+            dayView.selected = [self.selectedRange containsDay:dayView.day];
+        }
+    }
+}
+
+
 #pragma mark - Events
 
 - (void)didTapMonthBack:(id)sender {
@@ -130,6 +149,10 @@
         monthView = [[CalendarMonthView alloc] initWithMonth:month dayViewSize:_dayViewSize];
         [self.monthViews setObject:monthView forKey:monthViewKey];
         [self.monthContainerViewContentView addSubview:monthView];
+
+        for (CalendarDayView *dayView in monthView.dayViews) {
+            dayView.selected = [self.selectedRange containsDay:dayView.day];
+        }
     }
     
     return monthView;
@@ -163,7 +186,8 @@
         
         CalendarMonthView *monthView = [self cachedOrCreatedMonthViewForMonth:offsetMonth];
         [activeMonthViews addObject:monthView];
-        
+        [monthView.superview bringSubviewToFront:monthView];
+
         CGRect frame = monthView.frame;
         frame.origin.y = nextVerticalPosition;
         nextVerticalPosition += frame.size.height;
@@ -181,6 +205,10 @@
             startingVerticalPostion = monthView.frame.origin.y;
         }
     }
+    
+    CGRect frame = self.monthContainerViewContentView.frame;
+    frame.size.height = CGRectGetMaxY([[activeMonthViews lastObject] frame]);
+    self.monthContainerViewContentView.frame = frame;
     
     // Remove any old month views we don't need anymore
     NSArray *monthViewKeyes = self.monthViews.allKeys;
@@ -219,6 +247,107 @@
             self.userInteractionEnabled = YES;
         }
     }];
+}
+
+
+#pragma mark - Touches
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    CalendarDayView *touchedView = [self dayViewForTouches:touches];
+    if (touchedView == nil) {
+        self.draggingStartDay = nil;
+        return;
+    }
+    
+    self.draggingStartDay = touchedView.day;
+    self.draggingFixedDay = touchedView.day;
+    self.draggedOffStartDay = NO;
+    
+    if (self.selectedRange == nil) {
+        self.selectedRange = [[CalendarRange alloc] initWithStartDay:touchedView.day endDay:touchedView.day];
+    }
+    else if (![self.selectedRange.startDay isEqual:touchedView.day] && ![self.selectedRange.endDay isEqual:touchedView.day]) {
+        self.selectedRange = [[CalendarRange alloc] initWithStartDay:touchedView.day endDay:touchedView.day];
+    }
+    else if ([self.selectedRange.startDay isEqual:touchedView.day]) {
+        self.draggingFixedDay = self.selectedRange.endDay;
+    }
+    else {
+        self.draggingFixedDay = self.selectedRange.startDay;
+    }
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    if (self.draggingStartDay == nil) {
+        return;
+    }
+    
+    CalendarDayView *touchedView = [self dayViewForTouches:touches];
+    if (touchedView == nil) {
+        self.draggingStartDay = nil;
+        return;
+    }
+    
+    if ([touchedView.day.date compare:self.draggingFixedDay.date] == NSOrderedAscending) {
+        self.selectedRange = [[CalendarRange alloc] initWithStartDay:touchedView.day endDay:self.draggingFixedDay];
+    }
+    else {
+        self.selectedRange = [[CalendarRange alloc] initWithStartDay:self.draggingFixedDay endDay:touchedView.day];
+    }
+    
+    if (!self.draggedOffStartDay) {
+        if (![self.draggingStartDay isEqual:touchedView.day]) {
+            self.draggedOffStartDay = YES;
+        }
+    }
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    if (self.draggingStartDay == nil) {
+        return;
+    }
+    
+    CalendarDayView *touchedView = [self dayViewForTouches:touches];
+    if (touchedView == nil) {
+        self.draggingStartDay = nil;
+        return;
+    }
+    
+    if (!self.draggedOffStartDay && [self.draggingStartDay isEqual:touchedView.day]) {
+        self.selectedRange = [[CalendarRange alloc] initWithStartDay:touchedView.day endDay:touchedView.day];
+    }
+    
+    self.draggingStartDay = nil;
+    
+    
+    NSDateComponents *month = [touchedView.day.calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSCalendarCalendarUnit fromDate:touchedView.day.date];
+    if (month.year != self.visibleMonth.year || month.month != self.visibleMonth.month) {
+        NSDateComponents *fromMonth = self.visibleMonth;
+        self.visibleMonth = month;
+        
+        [self updateMonthLabelMonth:self.visibleMonth];
+        [self positionDayViewsForMonth:self.visibleMonth fromMonth:fromMonth];
+    }
+}
+
+
+- (CalendarDayView*)dayViewForTouches:(NSSet*)touches {
+    if (touches.count != 1) {
+        return nil;
+    }
+    
+    // Work out which day view was touched. We can't just use hit test on a root view because the month views can overlap
+    UITouch *touch = [touches anyObject];
+    CalendarDayView *touchedView = nil;
+    for (CalendarMonthView *monthView in self.monthViews.allValues) {
+        UIView *view = [monthView hitTest:[touch locationInView:monthView] withEvent:nil];
+        if ([view isKindOfClass:[CalendarDayView class]]) {
+            touchedView = (CalendarDayView*)view;
+            break;
+        }
+    }
+    
+    return touchedView;
 }
 
 @end

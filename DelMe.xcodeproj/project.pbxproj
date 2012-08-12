@@ -20,6 +20,8 @@
 		B56B9F0215D3B902005DEF84 /* CalenderMonthSelectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = B56B9F0115D3B902005DEF84 /* CalenderMonthSelectorView.m */; };
 		B56B9F0415D3BA53005DEF84 /* CalenderMonthSelectorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B56B9F0315D3BA53005DEF84 /* CalenderMonthSelectorView.xib */; };
 		B5A24DA815D6C0D500F07396 /* CalendarMonthView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A24DA715D6C0D500F07396 /* CalendarMonthView.m */; };
+		B5A24DAC15D7ECE200F07396 /* CalendarDayView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A24DAB15D7ECE200F07396 /* CalendarDayView.m */; };
+		B5A24DAF15D7F7C500F07396 /* CalendarRange.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A24DAE15D7F7C500F07396 /* CalendarRange.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +46,10 @@
 		B56B9F0315D3BA53005DEF84 /* CalenderMonthSelectorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CalenderMonthSelectorView.xib; sourceTree = "<group>"; };
 		B5A24DA615D6C0D500F07396 /* CalendarMonthView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarMonthView.h; sourceTree = "<group>"; };
 		B5A24DA715D6C0D500F07396 /* CalendarMonthView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarMonthView.m; sourceTree = "<group>"; };
+		B5A24DAA15D7ECE200F07396 /* CalendarDayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarDayView.h; sourceTree = "<group>"; };
+		B5A24DAB15D7ECE200F07396 /* CalendarDayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarDayView.m; sourceTree = "<group>"; };
+		B5A24DAD15D7F7C500F07396 /* CalendarRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarRange.h; sourceTree = "<group>"; };
+		B5A24DAE15D7F7C500F07396 /* CalendarRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarRange.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +112,10 @@
 				B56B9F0315D3BA53005DEF84 /* CalenderMonthSelectorView.xib */,
 				B5A24DA615D6C0D500F07396 /* CalendarMonthView.h */,
 				B5A24DA715D6C0D500F07396 /* CalendarMonthView.m */,
+				B5A24DAA15D7ECE200F07396 /* CalendarDayView.h */,
+				B5A24DAB15D7ECE200F07396 /* CalendarDayView.m */,
+				B5A24DAD15D7F7C500F07396 /* CalendarRange.h */,
+				B5A24DAE15D7F7C500F07396 /* CalendarRange.m */,
 			);
 			path = DelMe;
 			sourceTree = "<group>";
@@ -191,6 +201,8 @@
 				B56B9EFE15D3B8E3005DEF84 /* CalendarView.m in Sources */,
 				B56B9F0215D3B902005DEF84 /* CalenderMonthSelectorView.m in Sources */,
 				B5A24DA815D6C0D500F07396 /* CalendarMonthView.m in Sources */,
+				B5A24DAC15D7ECE200F07396 /* CalendarDayView.m in Sources */,
+				B5A24DAF15D7F7C500F07396 /* CalendarRange.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

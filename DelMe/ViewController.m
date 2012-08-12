@@ -11,6 +11,8 @@
 
 @interface ViewController ()
 
+@property (nonatomic, weak) IBOutlet UIView *calendarView;
+
 @end
 
 @implementation ViewController
@@ -30,6 +32,11 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+}
+
+- (IBAction)didTapTest:(id)sender {
+    [self.calendarView removeFromSuperview];
+    self.calendarView = nil;
 }
 
 

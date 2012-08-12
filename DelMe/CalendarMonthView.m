@@ -1,4 +1,4 @@
-//
+    //
 //  CalendarMonthView.m
 //  DelMe
 //
@@ -6,12 +6,13 @@
 //  Copyright 2012 Pete Callaway. All rights reserved.
 //
 
+#import "CalendarDayView.h"
 #import "CalendarMonthView.h"
 
 
 @interface CalendarMonthView ()
 
-@property (nonatomic, strong) NSMutableDictionary *dayViews;
+@property (nonatomic, strong) NSMutableDictionary *dayViewsDictionary;
 
 @end
 
@@ -36,7 +37,7 @@
         // Initialise properties
         _month = [month copy];
         _dayViewSize = dayViewSize;
-        _dayViews = [[NSMutableDictionary alloc] init];
+        _dayViewsDictionary = [[NSMutableDictionary alloc] init];
         
         [self createDayViews];
     }
@@ -73,12 +74,12 @@
                 dayFrame.origin = nextDayViewOrigin;
                 dayFrame.size = _dayViewSize;
                 
-                UILabel *dayView = [[UILabel alloc] initWithFrame:dayFrame];
-                [self.dayViews setObject:day forKey:[self dayViewKeyForDay:day]];
+                CalendarDayView *dayView = [[CalendarDayView alloc] initWithFrame:dayFrame];
+                dayView.day = day;
+                [self.dayViewsDictionary setObject:dayView forKey:[self dayViewKeyForDay:day]];
                 [self addSubview:dayView];
                  
                 [dayView setText:[formatter stringFromDate:day.date]];
-                [dayView setTextAlignment:UITextAlignmentCenter];
             }
             
             day.day = day.day + 1;
@@ -92,7 +93,14 @@
         startColumn = 0;
     } while (day.month == self.month.month);
     
-    self.frame = CGRectMake(0, 0, self.bounds.size.width, nextDayViewOrigin.y);
+    self.frame = CGRectMake(0, 0, _dayViewSize.width * numberOfDaysPerWeek, nextDayViewOrigin.y);
+}
+
+
+#pragma mark - Properties
+
+- (NSSet*)dayViews {
+    return [NSSet setWithArray:self.dayViewsDictionary.allValues];
 }
 
 - (NSString*)dayViewKeyForDay:(NSDateComponents*)day {
@@ -100,9 +108,8 @@
     return [NSString stringWithFormat:@"%d.%d.%d", day.year, day.month, day.day];
 }
 
-- (UIView*)dayViewForDay:(NSDateComponents*)day {
-    return [self.dayViews objectForKey:[self dayViewKeyForDay:day]];
+- (CalendarDayView*)dayViewForDay:(NSDateComponents*)day {
+    return [self.dayViewsDictionary objectForKey:[self dayViewKeyForDay:day]];
 }
-
 
 @end
