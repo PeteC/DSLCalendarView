@@ -1,5 +1,5 @@
 /*
- DSLCalenderMonthSelectorView.h
+ DSLCalendarMonthSelectorView.h
  
  Copyright (c) 2012 Dative Studios. All rights reserved.
  
@@ -30,7 +30,7 @@
  */
 
 
-@interface DSLCalenderMonthSelectorView : UIView
+@interface DSLCalendarMonthSelectorView : UIView
 
 @property (nonatomic, weak) IBOutlet UIButton *backButton;
 @property (nonatomic, weak) IBOutlet UIButton *forwardButton;

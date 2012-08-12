@@ -1,5 +1,5 @@
 /*
- DSLCalenderMonthSelectorView.m
+ DSLCalendarMonthSelectorView.m
  
  Copyright (c) 2012 Dative Studios. All rights reserved.
  
@@ -30,15 +30,15 @@
  */
 
 
-#import "DSLCalenderMonthSelectorView.h"
+#import "DSLCalendarMonthSelectorView.h"
 
 
-@interface DSLCalenderMonthSelectorView ()
+@interface DSLCalendarMonthSelectorView ()
 
 @end
 
 
-@implementation DSLCalenderMonthSelectorView
+@implementation DSLCalendarMonthSelectorView
 
 
 #pragma mark - Memory management

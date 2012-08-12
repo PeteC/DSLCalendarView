@@ -31,7 +31,7 @@
 
 
 #import "DSLCalendarDayView.h"
-#import "DSLCalenderMonthSelectorView.h"
+#import "DSLCalendarMonthSelectorView.h"
 #import "DSLCalendarMonthView.h"
 #import "DSLCalendarView.h"
 #import "DSLCalendarDayView.h"
@@ -46,7 +46,7 @@
 @property (nonatomic, strong) NSMutableDictionary *monthViews;
 @property (nonatomic, strong) UIView *monthContainerView;
 @property (nonatomic, strong) UIView *monthContainerViewContentView;
-@property (nonatomic, strong) DSLCalenderMonthSelectorView *monthSelectorView;
+@property (nonatomic, strong) DSLCalendarMonthSelectorView *monthSelectorView;
 
 @end
 
@@ -92,7 +92,7 @@
     self.visibleMonth = [[NSCalendar currentCalendar] components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSCalendarCalendarUnit fromDate:[NSDate date]];
     self.visibleMonth.day = 1;
     
-    self.monthSelectorView = [DSLCalenderMonthSelectorView view];
+    self.monthSelectorView = [DSLCalendarMonthSelectorView view];
     self.monthSelectorView.backgroundColor = [UIColor clearColor];
     [self addSubview:self.monthSelectorView];
     
