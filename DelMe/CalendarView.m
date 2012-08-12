@@ -62,6 +62,8 @@
 
 - (void)commonInit {
     _dayViewSize = CGSizeMake(floorf(self.bounds.size.width / 7.0), 40);
+    CGFloat monthPadding = self.bounds.size.width - (_dayViewSize.width * 7.0);
+    monthPadding = floorf(monthPadding / 2.0);
     
     self.visibleMonth = [[NSCalendar currentCalendar] components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSCalendarCalendarUnit fromDate:[NSDate date]];
     self.visibleMonth.day = 1;
@@ -75,6 +77,8 @@
 
     // Month views are contained in a content view inside a container view - like a scroll view, but not a scroll view so we can have proper control over animations
     CGRect frame = self.bounds;
+    frame.origin.x = monthPadding;
+    frame.size.width = _dayViewSize.width * 7.0;
     frame.origin.y = CGRectGetMaxY(self.monthSelectorView.frame);
     frame.size.height -= frame.origin.y;
     self.monthContainerView = [[UIView alloc] initWithFrame:frame];

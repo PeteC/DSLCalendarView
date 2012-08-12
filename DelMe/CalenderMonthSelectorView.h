@@ -13,6 +13,8 @@
 @property (nonatomic, weak) IBOutlet UIButton *forwardButton;
 @property (nonatomic, weak) IBOutlet UILabel *titleLabel;
 
+@property (nonatomic, strong) IBOutletCollection(UILabel) NSArray *dayLabels;
+
 // Designated initialiser
 + (id)view;
 
