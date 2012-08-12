@@ -14,5 +14,7 @@
 // Designated initialiser
 - (id)initWithMonth:(NSDateComponents*)month dayViewSize:(CGSize)dayViewSize;
 
+- (UIView*)dayViewForDay:(NSDateComponents*)day;
+
 @end
 

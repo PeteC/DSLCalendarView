@@ -11,6 +11,8 @@
 
 @interface CalendarMonthView ()
 
+@property (nonatomic, strong) NSMutableDictionary *dayViews;
+
 @end
 
 
@@ -34,6 +36,7 @@
         // Initialise properties
         _month = [month copy];
         _dayViewSize = dayViewSize;
+        _dayViews = [[NSMutableDictionary alloc] init];
         
         [self createDayViews];
     }
@@ -71,7 +74,9 @@
                 dayFrame.size = _dayViewSize;
                 
                 UILabel *dayView = [[UILabel alloc] initWithFrame:dayFrame];
+                [self.dayViews setObject:day forKey:[self dayViewKeyForDay:day]];
                 [self addSubview:dayView];
+                 
                 [dayView setText:[formatter stringFromDate:day.date]];
                 [dayView setTextAlignment:UITextAlignmentCenter];
             }
@@ -89,5 +94,15 @@
     
     self.frame = CGRectMake(0, 0, self.bounds.size.width, nextDayViewOrigin.y);
 }
+
+- (NSString*)dayViewKeyForDay:(NSDateComponents*)day {
+    day = [day.calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:day.date];
+    return [NSString stringWithFormat:@"%d.%d.%d", day.year, day.month, day.day];
+}
+
+- (UIView*)dayViewForDay:(NSDateComponents*)day {
+    return [self.dayViews objectForKey:[self dayViewKeyForDay:day]];
+}
+
 
 @end
