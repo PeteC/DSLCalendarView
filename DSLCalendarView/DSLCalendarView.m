@@ -52,7 +52,7 @@
 
 
 @implementation DSLCalendarView {
-    CGSize _dayViewSize;
+    CGFloat _dayViewHeight;
 }
 
 
@@ -85,9 +85,7 @@
 }
 
 - (void)commonInit {
-    _dayViewSize = CGSizeMake(floorf(self.bounds.size.width / 7.0), 44);
-    CGFloat monthPadding = self.bounds.size.width - (_dayViewSize.width * 7.0);
-    monthPadding = floorf(monthPadding / 2.0);
+    _dayViewHeight = 44;
     
     self.visibleMonth = [[NSCalendar currentCalendar] components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSCalendarCalendarUnit fromDate:[NSDate date]];
     self.visibleMonth.day = 1;
@@ -101,8 +99,7 @@
 
     // Month views are contained in a content view inside a container view - like a scroll view, but not a scroll view so we can have proper control over animations
     CGRect frame = self.bounds;
-    frame.origin.x = monthPadding;
-    frame.size.width = _dayViewSize.width * 7.0;
+    frame.origin.x = 0;
     frame.origin.y = CGRectGetMaxY(self.monthSelectorView.frame);
     frame.size.height -= frame.origin.y;
     self.monthContainerView = [[UIView alloc] initWithFrame:frame];
@@ -180,7 +177,7 @@
     NSString *monthViewKey = [self monthViewKeyForMonth:month];
     DSLCalendarMonthView *monthView = [self.monthViews objectForKey:monthViewKey];
     if (monthView == nil) {
-        monthView = [[[[self class] monthViewClass] alloc] initWithMonth:month dayViewClass:[[self class] dayViewClass] dayViewSize:_dayViewSize];
+        monthView = [[[[self class] monthViewClass] alloc] initWithMonth:month width:self.bounds.size.width dayViewClass:[[self class] dayViewClass] dayViewHeight:_dayViewHeight];
         [self.monthViews setObject:monthView forKey:monthViewKey];
         [self.monthContainerViewContentView addSubview:monthView];
 
@@ -213,7 +210,7 @@
         
         // If this isn't the first month view we've created, check if this month should overlap the previous month
         if (monthOffset > -2 && offsetMonth.weekday - offsetMonth.calendar.firstWeekday != 0) {
-            nextVerticalPosition -= _dayViewSize.height;
+            nextVerticalPosition -= _dayViewHeight;
         }
         
         DSLCalendarMonthView *monthView = [self cachedOrCreatedMonthViewForMonth:offsetMonth];
