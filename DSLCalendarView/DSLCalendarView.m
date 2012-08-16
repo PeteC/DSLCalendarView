@@ -30,6 +30,7 @@
  */
 
 
+#import "DSLCalendarDayCalloutView.h"
 #import "DSLCalendarDayView.h"
 #import "DSLCalendarMonthSelectorView.h"
 #import "DSLCalendarMonthView.h"
@@ -39,6 +40,7 @@
 
 @interface DSLCalendarView ()
 
+@property (nonatomic, strong) DSLCalendarDayCalloutView *dayCalloutView;
 @property (nonatomic, copy) NSDateComponents *draggingFixedDay;
 @property (nonatomic, copy) NSDateComponents *draggingStartDay;
 @property (nonatomic, assign) BOOL draggedOffStartDay;
@@ -131,6 +133,13 @@
     
     for (DSLCalendarMonthView *monthView in self.monthViews.allValues) {
         [monthView updateDaySelectionStatesForRange:self.selectedRange];
+    }
+}
+
+- (void)setDraggingStartDay:(NSDateComponents *)draggingStartDay {
+    _draggingStartDay = [draggingStartDay copy];
+    if (draggingStartDay == nil) {
+        [self.dayCalloutView removeFromSuperview];
     }
 }
 
@@ -311,6 +320,8 @@
     else {
         self.draggingFixedDay = self.selectedRange.startDay;
     }
+    
+    [self positionCalloutViewForDayView:touchedView];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -336,6 +347,8 @@
             self.draggedOffStartDay = YES;
         }
     }
+
+    [self positionCalloutViewForDayView:touchedView];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -391,6 +404,34 @@
     }
     
     return nil;
+}
+
+
+#pragma mark - Day callout view methods
+
+- (void)positionCalloutViewForDayView:(DSLCalendarDayView*)dayView {
+    if (dayView == nil) {
+        [self.dayCalloutView removeFromSuperview];
+    }
+    else {
+        CGRect calloutFrame = [self convertRect:dayView.frame fromView:dayView.superview];
+        calloutFrame.origin.y -= calloutFrame.size.height;
+        calloutFrame.size.height *= 2;
+        
+        if (self.dayCalloutView == nil) {
+            self.dayCalloutView = [DSLCalendarDayCalloutView view];
+        }
+
+        self.dayCalloutView.frame = calloutFrame;
+        [self.dayCalloutView configureForDay:dayView.day];
+        
+        if (self.dayCalloutView.superview == nil) {
+            [self addSubview:self.dayCalloutView];
+        }
+        else {
+            [self bringSubviewToFront:self.dayCalloutView];
+        }
+    }
 }
 
 @end
