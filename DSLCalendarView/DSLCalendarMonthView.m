@@ -95,9 +95,6 @@
         nextDayViewOrigin.x += [[columnWidths objectAtIndex:column] floatValue];
     }
 
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"d";
-    
     do {
         for (NSInteger column = startColumn; column < numberOfDaysPerWeek; column++) {
             if (day.month == self.month.month) {
@@ -110,8 +107,6 @@
                 dayView.day = day;
                 [self.dayViewsDictionary setObject:dayView forKey:[self dayViewKeyForDay:day]];
                 [self addSubview:dayView];
-                 
-                [dayView setText:[formatter stringFromDate:day.date]];
             }
             
             day.day = day.day + 1;

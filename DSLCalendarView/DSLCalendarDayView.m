@@ -105,12 +105,9 @@
     }
 }
 
-- (NSString*)text {
-    return self.label.text;
-}
-
-- (void)setText:(NSString *)text {
-    self.label.text = text;
+- (void)setDay:(NSDateComponents *)day {
+    _day = [day copy];
+    self.label.text = [NSString stringWithFormat:@"%d", day.day];
 }
 
 - (void)setInCurrentMonth:(BOOL)inCurrentMonth {
