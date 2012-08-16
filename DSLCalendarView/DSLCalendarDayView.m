@@ -35,8 +35,6 @@
 
 @interface DSLCalendarDayView ()
 
-@property (nonatomic, strong) UILabel *label;
-
 @end
 
 
@@ -59,21 +57,24 @@
         
         // If this isn't a subclass, setup some defaults
         if ([self isMemberOfClass:[DSLCalendarDayView class]]) {
-            _backgroundView = [[UIView alloc] initWithFrame:self.bounds];
-            _backgroundView.backgroundColor = [UIColor whiteColor];
+            _backgroundView = [[UIView alloc] initWithFrame:CGRectInset(self.bounds, 1, 1)];
+            _backgroundView.backgroundColor = [UIColor colorWithWhite:245.0/255.0 alpha:1.0];
+            _backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
             [self addSubview:_backgroundView];
             
-            _dimmedBackgroundView = [[UIView alloc] initWithFrame:self.bounds];
-            _dimmedBackgroundView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
+            _dimmedBackgroundView = [[UIView alloc] initWithFrame:CGRectInset(self.bounds, 1, 1)];
+            _dimmedBackgroundView.backgroundColor = [UIColor colorWithWhite:225.0/255.0 alpha:1.0];
+            _dimmedBackgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
             [self addSubview:_dimmedBackgroundView];
             
             _selectedBackgroundView = [[UIImageView alloc] initWithFrame:self.bounds];
             [self addSubview:_selectedBackgroundView];
 
-            _label = [[UILabel alloc] initWithFrame:self.bounds];
-            _label.backgroundColor = [UIColor clearColor];
-            _label.textAlignment = UITextAlignmentCenter;
-            [self addSubview:_label];
+            _contentView = [[UILabel alloc] initWithFrame:CGRectInset(self.bounds, 1, 1)];
+            _contentView.backgroundColor = [UIColor clearColor];
+            _contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+            [(UILabel*)_contentView setTextAlignment:UITextAlignmentCenter];
+            [self addSubview:_contentView];
         }
     }
     
@@ -89,7 +90,11 @@
 
     // If this isn't a subclass, use the default images
     if ([self isMemberOfClass:[DSLCalendarDayView class]]) {
-        self.label.textColor = [UIColor whiteColor];
+        UILabel *label = nil;
+        if ([self.contentView isKindOfClass:[UILabel class]]) {
+            label = (UILabel*)self.contentView;
+        }
+        label.textColor = [UIColor whiteColor];
 
         UIImageView *selectionImageView = nil;
         if ([self.selectedBackgroundView isKindOfClass:[UIImageView class]]) {
@@ -98,7 +103,7 @@
     
         switch (selectionState) {
             case DSLCalendarDayViewNotSelected:
-                self.label.textColor = [UIColor blackColor];
+                label.textColor = [UIColor blackColor];
                 break;
                 
             case DSLCalendarDayViewStartOfSelection:
@@ -133,13 +138,47 @@
 
     // If this isn't a subclass, set the label
     if ([self isMemberOfClass:[DSLCalendarDayView class]]) {
-        self.label.text = [NSString stringWithFormat:@"%d", day.day];
+        if ([self.contentView isKindOfClass:[UILabel class]]) {
+            [(UILabel*)self.contentView setText:[NSString stringWithFormat:@"%d", day.day]];
+        }
     }
 }
 
 - (void)setInCurrentMonth:(BOOL)inCurrentMonth {
     _inCurrentMonth = inCurrentMonth;
     self.dimmedBackgroundView.alpha = inCurrentMonth ? 0.0 : 1.0;
+}
+
+
+#pragma mark - UIView methods
+
+- (void)drawRect:(CGRect)rect {
+    if ([self isMemberOfClass:[DSLCalendarDayView class]]) {
+        CGContextRef context = UIGraphicsGetCurrentContext();
+        
+        CGContextSetLineWidth(context, 1.0);
+        
+        CGContextSaveGState(context);
+        CGContextSetStrokeColorWithColor(context, [UIColor colorWithWhite:255.0/255.0 alpha:1.0].CGColor);
+        CGContextMoveToPoint(context, 0.5, self.bounds.size.height - 0.5);
+        CGContextAddLineToPoint(context, 0.5, 0.5);
+        CGContextAddLineToPoint(context, self.bounds.size.width - 0.5, 0.5);
+        CGContextStrokePath(context);
+        CGContextRestoreGState(context);
+
+        CGContextSaveGState(context);
+        if (self.isInCurrentMonth) {
+            CGContextSetStrokeColorWithColor(context, [UIColor colorWithWhite:205.0/255.0 alpha:1.0].CGColor);
+        }
+        else {
+            CGContextSetStrokeColorWithColor(context, [UIColor colorWithWhite:185.0/255.0 alpha:1.0].CGColor);
+        }
+        CGContextMoveToPoint(context, self.bounds.size.width - 0.5, 0.0);
+        CGContextAddLineToPoint(context, self.bounds.size.width - 0.5, self.bounds.size.height - 0.5);
+        CGContextAddLineToPoint(context, 0.0, self.bounds.size.height - 0.5);
+        CGContextStrokePath(context);
+        CGContextRestoreGState(context);
+    }
 }
 
 @end
