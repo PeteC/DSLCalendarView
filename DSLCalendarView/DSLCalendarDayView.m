@@ -70,10 +70,14 @@
             _selectedBackgroundView = [[UIImageView alloc] initWithFrame:self.bounds];
             [self addSubview:_selectedBackgroundView];
 
-            _contentView = [[UILabel alloc] initWithFrame:CGRectInset(self.bounds, 1, 1)];
-            _contentView.backgroundColor = [UIColor clearColor];
-            _contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-            [(UILabel*)_contentView setTextAlignment:UITextAlignmentCenter];
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectInset(self.bounds, 1, 1)];
+            label.textColor = [UIColor blackColor];
+            label.shadowColor = [UIColor whiteColor];
+            label.shadowOffset = CGSizeMake(0, 1.5);
+            label.backgroundColor = [UIColor clearColor];
+            label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+            label.textAlignment = UITextAlignmentCenter;
+            _contentView = label;
             [self addSubview:_contentView];
         }
     }
@@ -95,6 +99,7 @@
             label = (UILabel*)self.contentView;
         }
         label.textColor = [UIColor whiteColor];
+        label.shadowOffset = CGSizeZero;
 
         UIImageView *selectionImageView = nil;
         if ([self.selectedBackgroundView isKindOfClass:[UIImageView class]]) {
@@ -104,6 +109,7 @@
         switch (selectionState) {
             case DSLCalendarDayViewNotSelected:
                 label.textColor = [UIColor blackColor];
+                label.shadowOffset = CGSizeMake(0, 1.5);
                 break;
                 
             case DSLCalendarDayViewStartOfSelection:
