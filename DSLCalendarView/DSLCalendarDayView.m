@@ -35,8 +35,6 @@
 
 @interface DSLCalendarDayView ()
 
-@property (nonatomic, strong) UIView *adjacentMonthView;
-@property (nonatomic, strong) UIImageView *selectedView;
 @property (nonatomic, strong) UILabel *label;
 
 @end
@@ -58,17 +56,24 @@
     if (self != nil) {
         self.backgroundColor = [UIColor whiteColor];
         
-        _adjacentMonthView = [[UIView alloc] initWithFrame:self.bounds];
-        _adjacentMonthView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
-        [self addSubview:_adjacentMonthView];
-        
-        _selectedView = [[UIImageView alloc] initWithFrame:self.bounds];
-        [self addSubview:_selectedView];
+        // If this isn't a subclass, setup some defaults
+        if ([self isMemberOfClass:[DSLCalendarDayView class]]) {
+            _backgroundView = [[UIView alloc] initWithFrame:self.bounds];
+            _backgroundView.backgroundColor = [UIColor whiteColor];
+            [self addSubview:_backgroundView];
+            
+            _dimmedBackgroundView = [[UIView alloc] initWithFrame:self.bounds];
+            _dimmedBackgroundView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
+            [self addSubview:_dimmedBackgroundView];
+            
+            _selectedBackgroundView = [[UIImageView alloc] initWithFrame:self.bounds];
+            [self addSubview:_selectedBackgroundView];
 
-        _label = [[UILabel alloc] initWithFrame:self.bounds];
-        _label.backgroundColor = [UIColor clearColor];
-        _label.textAlignment = UITextAlignmentCenter;
-        [self addSubview:_label];
+            _label = [[UILabel alloc] initWithFrame:self.bounds];
+            _label.backgroundColor = [UIColor clearColor];
+            _label.textAlignment = UITextAlignmentCenter;
+            [self addSubview:_label];
+        }
     }
     
     return self;
@@ -78,41 +83,62 @@
 #pragma mark - Properties
 
 - (void)setSelectionState:(DSLCalendarDayViewSelectionState)selectionState {
-    self.selectedView.hidden = NO;
-    self.label.textColor = [UIColor whiteColor];
+    _selectionState = selectionState;
+    self.selectedBackgroundView.hidden = (selectionState == DSLCalendarDayViewNotSelected);
 
-    switch (selectionState) {
-        case DSLCalendarDayViewNotSelected:
-            self.selectedView.hidden = YES;
-            self.label.textColor = [UIColor blackColor];
-            break;
-            
-        case DSLCalendarDayViewStartOfSelection:
-            self.selectedView.image = [[UIImage imageNamed:@"DSLCalendarDaySelection-left"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 20, 20, 20)];
-            break;
-            
-        case DSLCalendarDayViewEndOfSelection:
-            self.selectedView.image = [[UIImage imageNamed:@"DSLCalendarDaySelection-right"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 20, 20, 20)];
-            break;
-            
-        case DSLCalendarDayViewWithinSelection:
-            self.selectedView.image = [[UIImage imageNamed:@"DSLCalendarDaySelection-middle"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 20, 20, 20)];
-            break;
-            
-        case DSLCalendarDayViewWholeSelection:
-            self.selectedView.image = [[UIImage imageNamed:@"DSLCalendarDaySelection"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 20, 20, 20)];
-            break;
+    // If this isn't a subclass, use the default images
+    if ([self isMemberOfClass:[DSLCalendarDayView class]]) {
+        self.label.textColor = [UIColor whiteColor];
+
+        UIImageView *selectionImageView = nil;
+        if ([self.selectedBackgroundView isKindOfClass:[UIImageView class]]) {
+            selectionImageView = (UIImageView*)self.selectedBackgroundView;
+        }
+    
+        switch (selectionState) {
+            case DSLCalendarDayViewNotSelected:
+                self.label.textColor = [UIColor blackColor];
+                break;
+                
+            case DSLCalendarDayViewStartOfSelection:
+                if (selectionImageView != nil) {
+                    selectionImageView.image = [[UIImage imageNamed:@"DSLCalendarDaySelection-left"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 20, 20, 20)];
+                }
+                break;
+                
+            case DSLCalendarDayViewEndOfSelection:
+                if (selectionImageView != nil) {
+                    selectionImageView.image = [[UIImage imageNamed:@"DSLCalendarDaySelection-right"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 20, 20, 20)];
+                }
+                break;
+                
+            case DSLCalendarDayViewWithinSelection:
+                if (selectionImageView != nil) {
+                    selectionImageView.image = [[UIImage imageNamed:@"DSLCalendarDaySelection-middle"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 20, 20, 20)];
+                }
+                break;
+                
+            case DSLCalendarDayViewWholeSelection:
+                if (selectionImageView != nil) {
+                    selectionImageView.image = [[UIImage imageNamed:@"DSLCalendarDaySelection"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 20, 20, 20)];
+                }
+                break;
+        }
     }
 }
 
 - (void)setDay:(NSDateComponents *)day {
     _day = [day copy];
-    self.label.text = [NSString stringWithFormat:@"%d", day.day];
+
+    // If this isn't a subclass, set the label
+    if ([self isMemberOfClass:[DSLCalendarDayView class]]) {
+        self.label.text = [NSString stringWithFormat:@"%d", day.day];
+    }
 }
 
 - (void)setInCurrentMonth:(BOOL)inCurrentMonth {
     _inCurrentMonth = inCurrentMonth;
-    self.adjacentMonthView.alpha = inCurrentMonth ? 0.0 : 1.0;
+    self.dimmedBackgroundView.alpha = inCurrentMonth ? 0.0 : 1.0;
 }
 
 @end

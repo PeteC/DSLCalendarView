@@ -41,6 +41,10 @@ enum {
 
 @interface DSLCalendarDayView : UIView
 
+@property (nonatomic, strong) UIView *backgroundView;
+@property (nonatomic, strong) UIView *dimmedBackgroundView;
+@property (nonatomic, strong) UIView *selectedBackgroundView;
+
 @property (nonatomic, copy) NSDateComponents *day;
 @property (nonatomic, assign) DSLCalendarDayViewSelectionState selectionState;
 @property (nonatomic, assign, getter = isInCurrentMonth) BOOL inCurrentMonth;
