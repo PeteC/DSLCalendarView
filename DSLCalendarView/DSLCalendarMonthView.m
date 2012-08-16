@@ -92,7 +92,7 @@
     NSArray *columnWidths = [self calculateColumnWidthsForColumnCount:numberOfDaysPerWeek];
     CGPoint nextDayViewOrigin = CGPointZero;
     for (NSInteger column = 0; column < startColumn; column++) {
-        nextDayViewOrigin.x = [[columnWidths objectAtIndex:column] floatValue];
+        nextDayViewOrigin.x += [[columnWidths objectAtIndex:column] floatValue];
     }
 
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
