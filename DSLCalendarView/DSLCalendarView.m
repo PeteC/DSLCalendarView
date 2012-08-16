@@ -386,9 +386,15 @@
     if (touches.count != 1) {
         return nil;
     }
+
+    UITouch *touch = [touches anyObject];
+    
+    // Check if the touch is within the month container
+    if (!CGRectContainsPoint(self.monthContainerView.frame, [touch locationInView:self.monthContainerView.superview])) {
+        return nil;
+    }
     
     // Work out which day view was touched. We can't just use hit test on a root view because the month views can overlap
-    UITouch *touch = [touches anyObject];
     for (DSLCalendarMonthView *monthView in self.monthViews.allValues) {
         UIView *view = [monthView hitTest:[touch locationInView:monthView] withEvent:nil];
         if (view == nil) {
