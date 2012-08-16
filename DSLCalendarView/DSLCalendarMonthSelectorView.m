@@ -101,4 +101,24 @@
     }
 }
 
+
+#pragma mark - UIView methods
+
+- (void)drawRect:(CGRect)rect {
+    [super drawRect:rect];
+    
+    if ([self isMemberOfClass:[DSLCalendarMonthSelectorView class]]) {
+        CGContextRef context = UIGraphicsGetCurrentContext();
+        CGContextSaveGState(context);
+        
+        CGContextSetLineWidth(context, 1.0);
+        CGContextSetStrokeColorWithColor(context, [UIColor colorWithWhite:205.0/255.0 alpha:1.0].CGColor);
+        CGContextMoveToPoint(context, 0.0, self.bounds.size.height - 0.5);
+        CGContextAddLineToPoint(context, self.bounds.size.width - 0.5, self.bounds.size.height - 0.5);
+        CGContextStrokePath(context);
+        
+        CGContextRestoreGState(context);
+    }
+}
+
 @end

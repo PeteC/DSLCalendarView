@@ -94,6 +94,7 @@
     
     self.monthSelectorView = [DSLCalendarMonthSelectorView view];
     self.monthSelectorView.backgroundColor = [UIColor clearColor];
+    self.monthSelectorView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
     [self addSubview:self.monthSelectorView];
     
     [self.monthSelectorView.backButton addTarget:self action:@selector(didTapMonthBack:) forControlEvents:UIControlEventTouchUpInside];
