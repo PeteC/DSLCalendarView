@@ -36,7 +36,7 @@
 @interface DSLCalendarDayView ()
 
 @property (nonatomic, strong) UIView *adjacentMonthView;
-@property (nonatomic, strong) UIView *selectedView;
+@property (nonatomic, strong) UIImageView *selectedView;
 @property (nonatomic, strong) UILabel *label;
 
 @end
@@ -62,8 +62,7 @@
         _adjacentMonthView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
         [self addSubview:_adjacentMonthView];
         
-        _selectedView = [[UIView alloc] initWithFrame:self.bounds];
-        _selectedView.backgroundColor = [UIColor yellowColor];
+        _selectedView = [[UIImageView alloc] initWithFrame:self.bounds];
         [self addSubview:_selectedView];
 
         _label = [[UILabel alloc] initWithFrame:self.bounds];
@@ -79,8 +78,31 @@
 #pragma mark - Properties
 
 - (void)setSelectionState:(DSLCalendarDayViewSelectionState)selectionState {
-    _selectionState = selectionState;
-    self.selectedView.hidden = selectionState == DSLCalendarDayViewNotSelected;
+    self.selectedView.hidden = NO;
+    self.label.textColor = [UIColor whiteColor];
+
+    switch (selectionState) {
+        case DSLCalendarDayViewNotSelected:
+            self.selectedView.hidden = YES;
+            self.label.textColor = [UIColor blackColor];
+            break;
+            
+        case DSLCalendarDayViewStartOfSelection:
+            self.selectedView.image = [[UIImage imageNamed:@"DSLCalendarDaySelection-left"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 20, 20, 20)];
+            break;
+            
+        case DSLCalendarDayViewEndOfSelection:
+            self.selectedView.image = [[UIImage imageNamed:@"DSLCalendarDaySelection-right"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 20, 20, 20)];
+            break;
+            
+        case DSLCalendarDayViewWithinSelection:
+            self.selectedView.image = [[UIImage imageNamed:@"DSLCalendarDaySelection-middle"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 20, 20, 20)];
+            break;
+            
+        case DSLCalendarDayViewWholeSelection:
+            self.selectedView.image = [[UIImage imageNamed:@"DSLCalendarDaySelection"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 20, 20, 20)];
+            break;
+    }
 }
 
 - (NSString*)text {
