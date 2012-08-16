@@ -33,6 +33,10 @@
 		B5E17CF815DD12AE003DEDEA /* DSLCalendarDaySelection-right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B5E17CEE15DD12AE003DEDEA /* DSLCalendarDaySelection-right@2x.png */; };
 		B5E17CF915DD12AE003DEDEA /* DSLCalendarDaySelection.png in Resources */ = {isa = PBXBuildFile; fileRef = B5E17CEF15DD12AE003DEDEA /* DSLCalendarDaySelection.png */; };
 		B5E17CFA15DD12AE003DEDEA /* DSLCalendarDaySelection@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B5E17CF015DD12AE003DEDEA /* DSLCalendarDaySelection@2x.png */; };
+		B5E17D1015DD577C003DEDEA /* DSLCalendar-nextMonth.png in Resources */ = {isa = PBXBuildFile; fileRef = B5E17D0C15DD577C003DEDEA /* DSLCalendar-nextMonth.png */; };
+		B5E17D1115DD577C003DEDEA /* DSLCalendar-nextMonth@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B5E17D0D15DD577C003DEDEA /* DSLCalendar-nextMonth@2x.png */; };
+		B5E17D1215DD577C003DEDEA /* DSLCalendar-previousMonth.png in Resources */ = {isa = PBXBuildFile; fileRef = B5E17D0E15DD577C003DEDEA /* DSLCalendar-previousMonth.png */; };
+		B5E17D1315DD577C003DEDEA /* DSLCalendar-previousMonth@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B5E17D0F15DD577C003DEDEA /* DSLCalendar-previousMonth@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,6 +77,10 @@
 		B5E17CEE15DD12AE003DEDEA /* DSLCalendarDaySelection-right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DSLCalendarDaySelection-right@2x.png"; sourceTree = "<group>"; };
 		B5E17CEF15DD12AE003DEDEA /* DSLCalendarDaySelection.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DSLCalendarDaySelection.png; sourceTree = "<group>"; };
 		B5E17CF015DD12AE003DEDEA /* DSLCalendarDaySelection@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DSLCalendarDaySelection@2x.png"; sourceTree = "<group>"; };
+		B5E17D0C15DD577C003DEDEA /* DSLCalendar-nextMonth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DSLCalendar-nextMonth.png"; sourceTree = "<group>"; };
+		B5E17D0D15DD577C003DEDEA /* DSLCalendar-nextMonth@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DSLCalendar-nextMonth@2x.png"; sourceTree = "<group>"; };
+		B5E17D0E15DD577C003DEDEA /* DSLCalendar-previousMonth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DSLCalendar-previousMonth.png"; sourceTree = "<group>"; };
+		B5E17D0F15DD577C003DEDEA /* DSLCalendar-previousMonth@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DSLCalendar-previousMonth@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +176,10 @@
 		B5E17CE615DD12AE003DEDEA /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				B5E17D0C15DD577C003DEDEA /* DSLCalendar-nextMonth.png */,
+				B5E17D0D15DD577C003DEDEA /* DSLCalendar-nextMonth@2x.png */,
+				B5E17D0E15DD577C003DEDEA /* DSLCalendar-previousMonth.png */,
+				B5E17D0F15DD577C003DEDEA /* DSLCalendar-previousMonth@2x.png */,
 				B5E17CE715DD12AE003DEDEA /* DSLCalendarDayCallout.png */,
 				B5E17CE815DD12AE003DEDEA /* DSLCalendarDayCallout@2x.png */,
 				B5E17CE915DD12AE003DEDEA /* DSLCalendarDaySelection-left.png */,
@@ -247,6 +259,10 @@
 				B5E17CF815DD12AE003DEDEA /* DSLCalendarDaySelection-right@2x.png in Resources */,
 				B5E17CF915DD12AE003DEDEA /* DSLCalendarDaySelection.png in Resources */,
 				B5E17CFA15DD12AE003DEDEA /* DSLCalendarDaySelection@2x.png in Resources */,
+				B5E17D1015DD577C003DEDEA /* DSLCalendar-nextMonth.png in Resources */,
+				B5E17D1115DD577C003DEDEA /* DSLCalendar-nextMonth@2x.png in Resources */,
+				B5E17D1215DD577C003DEDEA /* DSLCalendar-previousMonth.png in Resources */,
+				B5E17D1315DD577C003DEDEA /* DSLCalendar-previousMonth@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -39,10 +39,10 @@
 					<object class="IBUILabel" id="461668017">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{53, 13}, {214, 21}}</string>
+						<string key="NSFrame">{{45, 16}, {230, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="942570906"/>
+						<reference key="NSNextKeyView" ref="37218465"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -71,7 +71,7 @@
 					<object class="IBUIButton" id="504227179">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{8, 5}, {37, 37}}</string>
+						<string key="NSFrameSize">{45, 54}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="461668017"/>
@@ -80,7 +80,6 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<string key="IBUINormalTitle">&lt;</string>
 						<object class="NSColor" key="IBUIHighlightedTitleColor" id="243871042">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MQA</bytes>
@@ -92,6 +91,10 @@
 						<object class="NSColor" key="IBUINormalTitleShadowColor" id="971388478">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MC41AA</bytes>
+						</object>
+						<object class="NSCustomResource" key="IBUINormalImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">DSLCalendar-previousMonth.png</string>
 						</object>
 						<object class="IBUIFontDescription" key="IBUIFontDescription" id="309090528">
 							<int key="type">2</int>
@@ -106,22 +109,25 @@
 					<object class="IBUIButton" id="942570906">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{275, 5}, {37, 37}}</string>
+						<string key="NSFrame">{{275, 0}, {45, 54}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="37218465"/>
+						<reference key="NSNextKeyView" ref="150265878"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<string key="IBUINormalTitle">&gt;</string>
 						<reference key="IBUIHighlightedTitleColor" ref="243871042"/>
 						<object class="NSColor" key="IBUINormalTitleColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 						</object>
 						<reference key="IBUINormalTitleShadowColor" ref="971388478"/>
+						<object class="NSCustomResource" key="IBUINormalImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">DSLCalendar-nextMonth.png</string>
+						</object>
 						<reference key="IBUIFontDescription" ref="309090528"/>
 						<reference key="IBUIFont" ref="992926273"/>
 					</object>
@@ -257,7 +263,7 @@
 						<string key="NSFrame">{{230, 50}, {45, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="150265878"/>
+						<reference key="NSNextKeyView" ref="942570906"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -569,6 +575,10 @@
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
+		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="DSLCalendar-nextMonth.png">{12, 16}</string>
+			<string key="DSLCalendar-previousMonth.png">{12, 16}</string>
+		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1498</string>
 	</data>
 </archive>
