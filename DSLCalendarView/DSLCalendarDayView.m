@@ -70,7 +70,7 @@
             _selectedBackgroundView = [[UIImageView alloc] initWithFrame:self.bounds];
             [self addSubview:_selectedBackgroundView];
 
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectInset(self.bounds, 1, 1)];
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width - 1, self.bounds.size.height)];
             label.textColor = [UIColor blackColor];
             label.shadowColor = [UIColor whiteColor];
             label.shadowOffset = CGSizeMake(0, 1.5);
