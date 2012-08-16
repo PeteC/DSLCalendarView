@@ -31,14 +31,26 @@
 
 
 #import "DSLCalendarRange.h"
+#import "NSDate+DSLCalendarView.h"
+@protocol DSLCalendarViewDelegate;
 
 
 @interface DSLCalendarView : UIView
 
+@property (nonatomic, weak) id<DSLCalendarViewDelegate>delegate;
 @property (nonatomic, strong) NSDateComponents *visibleMonth;
 @property (nonatomic, strong) DSLCalendarRange *selectedRange;
 
 + (Class)monthViewClass;
 + (Class)dayViewClass;
+
+@end
+
+
+@protocol DSLCalendarViewDelegate <NSObject>
+
+@optional
+- (void)calendarView:(DSLCalendarView*)calendarView didSelectRange:(DSLCalendarRange*)range;
+- (DSLCalendarRange*)calendarView:(DSLCalendarView*)calendarView didDragToDay:(NSDateComponents*)day selectingRange:(DSLCalendarRange*)range;
 
 @end

@@ -141,6 +141,10 @@
     _draggingStartDay = [draggingStartDay copy];
     if (draggingStartDay == nil) {
         [self.dayCalloutView removeFromSuperview];
+
+        if ([self.delegate respondsToSelector:@selector(calendarView:didSelectRange:)]) {
+            [self.delegate calendarView:self didSelectRange:self.selectedRange];
+        }
     }
 }
 
@@ -309,11 +313,12 @@
     self.draggingFixedDay = touchedView.day;
     self.draggedOffStartDay = NO;
     
+    DSLCalendarRange *newRange = self.selectedRange;
     if (self.selectedRange == nil) {
-        self.selectedRange = [[DSLCalendarRange alloc] initWithStartDay:touchedView.day endDay:touchedView.day];
+        newRange = [[DSLCalendarRange alloc] initWithStartDay:touchedView.day endDay:touchedView.day];
     }
     else if (![self.selectedRange.startDay isEqual:touchedView.day] && ![self.selectedRange.endDay isEqual:touchedView.day]) {
-        self.selectedRange = [[DSLCalendarRange alloc] initWithStartDay:touchedView.day endDay:touchedView.day];
+        newRange = [[DSLCalendarRange alloc] initWithStartDay:touchedView.day endDay:touchedView.day];
     }
     else if ([self.selectedRange.startDay isEqual:touchedView.day]) {
         self.draggingFixedDay = self.selectedRange.endDay;
@@ -321,6 +326,11 @@
     else {
         self.draggingFixedDay = self.selectedRange.startDay;
     }
+    
+    if ([self.delegate respondsToSelector:@selector(calendarView:didDragToDay:selectingRange:)]) {
+        newRange = [self.delegate calendarView:self didDragToDay:touchedView.day selectingRange:newRange];
+    }
+    self.selectedRange = newRange;
     
     [self positionCalloutViewForDayView:touchedView];
 }
@@ -336,13 +346,19 @@
         return;
     }
     
+    DSLCalendarRange *newRange = self.selectedRange;
     if ([touchedView.day.date compare:self.draggingFixedDay.date] == NSOrderedAscending) {
-        self.selectedRange = [[DSLCalendarRange alloc] initWithStartDay:touchedView.day endDay:self.draggingFixedDay];
+        newRange = [[DSLCalendarRange alloc] initWithStartDay:touchedView.day endDay:self.draggingFixedDay];
     }
     else {
-        self.selectedRange = [[DSLCalendarRange alloc] initWithStartDay:self.draggingFixedDay endDay:touchedView.day];
+        newRange = [[DSLCalendarRange alloc] initWithStartDay:self.draggingFixedDay endDay:touchedView.day];
     }
-    
+
+    if ([self.delegate respondsToSelector:@selector(calendarView:didDragToDay:selectingRange:)]) {
+        newRange = [self.delegate calendarView:self didDragToDay:touchedView.day selectingRange:newRange];
+    }
+    self.selectedRange = newRange;
+
     if (!self.draggedOffStartDay) {
         if (![self.draggingStartDay isEqual:touchedView.day]) {
             self.draggedOffStartDay = YES;

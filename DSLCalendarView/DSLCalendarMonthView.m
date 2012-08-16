@@ -33,6 +33,7 @@
 #import "DSLCalendarDayView.h"
 #import "DSLCalendarMonthView.h"
 #import "DSLCalendarRange.h"
+#import "NSDate+DSLCalendarView.h"
 
 
 @interface DSLCalendarMonthView ()
@@ -82,7 +83,7 @@
     day.year = self.month.year;
     
     NSDate *firstDate = [day.calendar dateFromComponents:day];
-    day = [day.calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSCalendarCalendarUnit fromDate:firstDate];
+    day = [firstDate dslCalendarView_day];
 
     NSInteger startColumn = day.weekday - day.calendar.firstWeekday;
     if (startColumn < 0) {
@@ -124,7 +125,7 @@
             }
             
             day.day = day.day + 1;
-            day = [day.calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSCalendarCalendarUnit fromDate:day.date];
+            day = [day.date dslCalendarView_day];
             
             nextDayViewOrigin.x += [[columnWidths objectAtIndex:column] floatValue];
         }
@@ -212,7 +213,7 @@
 }
 
 - (NSString*)dayViewKeyForDay:(NSDateComponents*)day {
-    day = [day.calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:day.date];
+    day = [day.date dslCalendarView_day];
     return [NSString stringWithFormat:@"%d.%d.%d", day.year, day.month, day.day];
 }
 

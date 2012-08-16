@@ -37,6 +37,7 @@
 		B5E17D1115DD577C003DEDEA /* DSLCalendar-nextMonth@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B5E17D0D15DD577C003DEDEA /* DSLCalendar-nextMonth@2x.png */; };
 		B5E17D1215DD577C003DEDEA /* DSLCalendar-previousMonth.png in Resources */ = {isa = PBXBuildFile; fileRef = B5E17D0E15DD577C003DEDEA /* DSLCalendar-previousMonth.png */; };
 		B5E17D1315DD577C003DEDEA /* DSLCalendar-previousMonth@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B5E17D0F15DD577C003DEDEA /* DSLCalendar-previousMonth@2x.png */; };
+		B5E17D1615DD5F1E003DEDEA /* NSDate+DSLCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E17D1515DD5F1E003DEDEA /* NSDate+DSLCalendarView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -81,6 +82,8 @@
 		B5E17D0D15DD577C003DEDEA /* DSLCalendar-nextMonth@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DSLCalendar-nextMonth@2x.png"; sourceTree = "<group>"; };
 		B5E17D0E15DD577C003DEDEA /* DSLCalendar-previousMonth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DSLCalendar-previousMonth.png"; sourceTree = "<group>"; };
 		B5E17D0F15DD577C003DEDEA /* DSLCalendar-previousMonth@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DSLCalendar-previousMonth@2x.png"; sourceTree = "<group>"; };
+		B5E17D1415DD5F1D003DEDEA /* NSDate+DSLCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+DSLCalendarView.h"; sourceTree = "<group>"; };
+		B5E17D1515DD5F1E003DEDEA /* NSDate+DSLCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+DSLCalendarView.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +171,8 @@
 				B5294AE415DCF9CF003DB0C2 /* DSLCalendarDayCalloutView.h */,
 				B5294AE515DCF9CF003DB0C2 /* DSLCalendarDayCalloutView.m */,
 				B5294AE815DCFA59003DB0C2 /* DSLCalendarDayCalloutView.xib */,
+				B5E17D1415DD5F1D003DEDEA /* NSDate+DSLCalendarView.h */,
+				B5E17D1515DD5F1E003DEDEA /* NSDate+DSLCalendarView.m */,
 			);
 			name = DSLCalendarView;
 			path = ../../DSLCalendarView;
@@ -282,6 +287,7 @@
 				B5A24DEF15D81F9A00F07396 /* DSLCalendarView.m in Sources */,
 				B5A24DF015D81F9A00F07396 /* DSLCalendarMonthSelectorView.m in Sources */,
 				B5294AE615DCF9CF003DB0C2 /* DSLCalendarDayCalloutView.m in Sources */,
+				B5E17D1615DD5F1E003DEDEA /* NSDate+DSLCalendarView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
