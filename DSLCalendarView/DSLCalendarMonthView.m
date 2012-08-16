@@ -105,6 +105,20 @@
                 
                 DSLCalendarDayView *dayView = [[_dayViewClass alloc] initWithFrame:dayFrame];
                 dayView.day = day;
+                switch (column) {
+                    case 0:
+                        dayView.positionInWeek = DSLCalendarDayViewStartOfWeek;
+                        break;
+                        
+                    case numberOfDaysPerWeek - 1:
+                        dayView.positionInWeek = DSLCalendarDayViewEndOfWeek;
+                        break;
+                        
+                    default:
+                        dayView.positionInWeek = DSLCalendarDayViewMidWeek;
+                        break;
+                }
+                
                 [self.dayViewsDictionary setObject:dayView forKey:[self dayViewKeyForDay:day]];
                 [self addSubview:dayView];
             }

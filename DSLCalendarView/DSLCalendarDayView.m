@@ -55,6 +55,7 @@
     self = [super initWithFrame:frame];
     if (self != nil) {
         self.backgroundColor = [UIColor whiteColor];
+        _positionInWeek = DSLCalendarDayViewMidWeek;
         
         // If this isn't a subclass, setup some defaults
         if ([self isMemberOfClass:[DSLCalendarDayView class]]) {

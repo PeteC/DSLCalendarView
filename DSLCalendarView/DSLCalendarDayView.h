@@ -38,6 +38,12 @@ enum {
     DSLCalendarDayViewEndOfSelection,
 } typedef DSLCalendarDayViewSelectionState;
 
+enum {
+    DSLCalendarDayViewStartOfWeek = 0,
+    DSLCalendarDayViewMidWeek,
+    DSLCalendarDayViewEndOfWeek,
+} typedef DSLCalendarDayViewPositionInWeek;
+
 
 @interface DSLCalendarDayView : UIView
 
@@ -46,6 +52,7 @@ enum {
 @property (nonatomic, strong) UIView *selectedBackgroundView;
 
 @property (nonatomic, copy) NSDateComponents *day;
+@property (nonatomic, assign) DSLCalendarDayViewPositionInWeek positionInWeek;
 @property (nonatomic, assign) DSLCalendarDayViewSelectionState selectionState;
 @property (nonatomic, assign, getter = isInCurrentMonth) BOOL inCurrentMonth;
 
