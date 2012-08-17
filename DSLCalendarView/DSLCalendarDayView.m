@@ -71,7 +71,8 @@
             [self addSubview:_selectedBackgroundView];
 
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width - 1, self.bounds.size.height)];
-            label.textColor = [UIColor blackColor];
+            label.font = [UIFont boldSystemFontOfSize:17.0];
+            label.textColor = [UIColor colorWithWhite:66.0/255.0 alpha:1.0];
             label.shadowColor = [UIColor whiteColor];
             label.shadowOffset = CGSizeMake(0, 1.5);
             label.backgroundColor = [UIColor clearColor];
@@ -108,7 +109,7 @@
     
         switch (selectionState) {
             case DSLCalendarDayViewNotSelected:
-                label.textColor = [UIColor blackColor];
+                label.textColor = [UIColor colorWithWhite:66.0/255.0 alpha:1.0];
                 label.shadowOffset = CGSizeMake(0, 1.5);
                 break;
                 
