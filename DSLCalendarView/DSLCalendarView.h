@@ -41,6 +41,7 @@
 @property (nonatomic, strong) NSDateComponents *visibleMonth;
 @property (nonatomic, strong) DSLCalendarRange *selectedRange;
 
++ (Class)monthSelectorViewClass;
 + (Class)monthViewClass;
 + (Class)dayViewClass;
 

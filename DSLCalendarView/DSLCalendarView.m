@@ -92,7 +92,7 @@
     self.visibleMonth = [[NSCalendar currentCalendar] components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSCalendarCalendarUnit fromDate:[NSDate date]];
     self.visibleMonth.day = 1;
     
-    self.monthSelectorView = [DSLCalendarMonthSelectorView view];
+    self.monthSelectorView = [[[self class] monthSelectorViewClass] view];
     self.monthSelectorView.backgroundColor = [UIColor clearColor];
     self.monthSelectorView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
     [self addSubview:self.monthSelectorView];
@@ -120,6 +120,10 @@
 
 
 #pragma mark - Properties
+
++ (Class)monthSelectorViewClass {
+    return [DSLCalendarMonthSelectorView class];
+}
 
 + (Class)monthViewClass {
     return [DSLCalendarMonthView class];
