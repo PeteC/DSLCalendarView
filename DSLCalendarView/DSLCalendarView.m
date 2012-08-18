@@ -115,7 +115,7 @@
     self.monthViews = [[NSMutableDictionary alloc] init];
 
     [self updateMonthLabelMonth:self.visibleMonth];
-    [self positionDayViewsForMonth:self.visibleMonth fromMonth:self.visibleMonth];
+    [self positionViewsForMonth:self.visibleMonth fromMonth:self.visibleMonth];
 }
 
 
@@ -156,7 +156,7 @@
     [self.visibleMonth setMonth:self.visibleMonth.month - 1];
     
     [self updateMonthLabelMonth:self.visibleMonth];
-    [self positionDayViewsForMonth:self.visibleMonth fromMonth:fromMonth];
+    [self positionViewsForMonth:self.visibleMonth fromMonth:fromMonth];
 }
 
 - (void)didTapMonthForward:(id)sender {
@@ -164,7 +164,7 @@
     [self.visibleMonth setMonth:self.visibleMonth.month + 1];
 
     [self updateMonthLabelMonth:self.visibleMonth];
-    [self positionDayViewsForMonth:self.visibleMonth fromMonth:fromMonth];
+    [self positionViewsForMonth:self.visibleMonth fromMonth:fromMonth];
 }
 
 
@@ -201,7 +201,7 @@
     return monthView;
 }
 
-- (void)positionDayViewsForMonth:(NSDateComponents*)month fromMonth:(NSDateComponents*)fromMonth {
+- (void)positionViewsForMonth:(NSDateComponents*)month fromMonth:(NSDateComponents*)fromMonth {
     self.userInteractionEnabled = NO;
     fromMonth = [fromMonth copy];
     month = [month copy];
@@ -216,17 +216,18 @@
     
     NSMutableArray *activeMonthViews = [[NSMutableArray alloc] init];
     
-    // Create and position the month views for the final month and those around it
+    // Create and position the month views for the target month and those around it
     for (NSInteger monthOffset = -2; monthOffset <= 2; monthOffset += 1) {
         NSDateComponents *offsetMonth = [month copy];
         offsetMonth.month = offsetMonth.month + monthOffset;
         offsetMonth = [offsetMonth.calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSCalendarCalendarUnit fromDate:offsetMonth.date];
         
-        // If this isn't the first month view we've created, check if this month should overlap the previous month
-        if (monthOffset > -2 && offsetMonth.weekday - offsetMonth.calendar.firstWeekday != 0) {
+        // Check if this month should overlap the previous month
+        if (![self monthStartsOnFirstDayOfWeek:offsetMonth]) {
             nextVerticalPosition -= _dayViewHeight;
         }
         
+        // Create and position the month view
         DSLCalendarMonthView *monthView = [self cachedOrCreatedMonthViewForMonth:offsetMonth];
         [activeMonthViews addObject:monthView];
         [monthView.superview bringSubviewToFront:monthView];
@@ -238,17 +239,40 @@
 
         // Check if this view is where we should animate to or from
         if (monthOffset == 0) {
+            // This is the target month so we can use it to determine where to scroll to
             restingVerticalPosition = monthView.frame.origin.y;
-            restingHeight = monthView.bounds.size.height;
+            restingHeight += monthView.bounds.size.height;
         }
         else if (monthOffset == 1 && monthComparisonResult == NSOrderedAscending) {
+            // This is the month we're scrolling back from
             startingVerticalPostion = monthView.frame.origin.y;
+            
+            if ([self monthStartsOnFirstDayOfWeek:offsetMonth]) {
+                startingVerticalPostion -= _dayViewHeight;
+            }
         }
         else if (monthOffset == -1 && monthComparisonResult == NSOrderedDescending) {
+            // This is the month we're scrolling forward from
             startingVerticalPostion = monthView.frame.origin.y;
+            
+            if ([self monthStartsOnFirstDayOfWeek:offsetMonth]) {
+                startingVerticalPostion -= _dayViewHeight;
+            }
+        }
+
+        // Check if the active or following month start on the first day of the week
+        if (monthOffset == 0 && [self monthStartsOnFirstDayOfWeek:offsetMonth]) {
+            // If the active month starts on a monday, add a day view height to the resting height and move the resting position up so the user can drag into that previous month
+            restingVerticalPosition -= _dayViewHeight;
+            restingHeight += _dayViewHeight;
+        }
+        else if (monthOffset == 1 && [self monthStartsOnFirstDayOfWeek:offsetMonth]) {
+            // If the month after the target month starts on a monday, add a day view height to the resting height so the user can drag into that month
+            restingHeight += _dayViewHeight;
         }
     }
     
+    // Size the month container to fit all the month views
     CGRect frame = self.monthContainerViewContentView.frame;
     frame.size.height = CGRectGetMaxY([[activeMonthViews lastObject] frame]);
     self.monthContainerViewContentView.frame = frame;
@@ -297,6 +321,13 @@
             self.userInteractionEnabled = YES;
         }
     }];
+}
+
+- (BOOL)monthStartsOnFirstDayOfWeek:(NSDateComponents*)month {
+    // Make sure we have the components we need to do the calculation
+    month = [month.calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSCalendarCalendarUnit fromDate:month.date];
+    
+    return (month.weekday - month.calendar.firstWeekday == 0);
 }
 
 
@@ -393,7 +424,7 @@
         self.visibleMonth.year = month.year;
         
         [self updateMonthLabelMonth:self.visibleMonth];
-        [self positionDayViewsForMonth:self.visibleMonth fromMonth:fromMonth];
+        [self positionViewsForMonth:self.visibleMonth fromMonth:fromMonth];
     }
 }
 
