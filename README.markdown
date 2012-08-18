@@ -3,7 +3,7 @@
 
 DSLCalendar view is an iOS control that displays a calendar similar to the system calendar. It allows the user to select a single date or a date range.
 
-![](http://raw.github.com/PeteC/DSLCalendarView/master/Images/Screenshot.png)
+![](http://github.com/PeteC/DSLCalendarView/raw/images/Screenshot.png)
 
 ----
 
