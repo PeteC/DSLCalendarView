@@ -16,6 +16,7 @@ DSLCalendarMonthView contains a grid of DSLCalendarDayViews for a specific month
 
 DSLCalendarDayView is the view that represents a single day in a month view
 
+![](http://github.com/PeteC/DSLCalendarView/raw/Images/Screenshot.png)
 
 ----
 
