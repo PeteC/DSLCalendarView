@@ -52,6 +52,7 @@
 
 @optional
 - (void)calendarView:(DSLCalendarView*)calendarView didSelectRange:(DSLCalendarRange*)range;
+- (void)calendarView:(DSLCalendarView *)calendarView didChangeVisibleMonth:(NSDateComponents*)month;
 - (DSLCalendarRange*)calendarView:(DSLCalendarView*)calendarView didDragToDay:(NSDateComponents*)day selectingRange:(DSLCalendarRange*)range;
 
 @end

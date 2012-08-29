@@ -76,6 +76,10 @@
     return range;
 }
 
+- (void)calendarView:(DSLCalendarView *)calendarView didChangeVisibleMonth:(NSDateComponents *)month {
+    NSLog(@"Now showing %@", month);
+}
+
 - (BOOL)day:(NSDateComponents*)day1 isBeforeDay:(NSDateComponents*)day2 {
     return ([day1.date compare:day2.date] == NSOrderedAscending);
 }

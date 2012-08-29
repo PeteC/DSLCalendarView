@@ -323,6 +323,10 @@
     } completion:^(BOOL finished) {
         if (finished) {
             self.userInteractionEnabled = YES;
+            
+            if (monthComparisonResult != NSOrderedSame && [self.delegate respondsToSelector:@selector(calendarView:didChangeVisibleMonth:)]) {
+                [self.delegate calendarView:self didChangeVisibleMonth:self.visibleMonth];
+            }
         }
     }];
 }
