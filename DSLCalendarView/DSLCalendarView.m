@@ -298,6 +298,10 @@
         self.monthContainerViewContentView.frame = frame;
     }
     
+    if (monthComparisonResult != NSOrderedSame && [self.delegate respondsToSelector:@selector(calendarView:willChangeToVisibleMonth:duration:)]) {
+        [self.delegate calendarView:self willChangeToVisibleMonth:[month copy] duration:animationDuration];
+    }
+    
     [UIView animateWithDuration:animationDuration delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         for (NSInteger index = 0; index < activeMonthViews.count; index++) {
             DSLCalendarMonthView *monthView = [activeMonthViews objectAtIndex:index];
@@ -324,8 +328,8 @@
         if (finished) {
             self.userInteractionEnabled = YES;
             
-            if (monthComparisonResult != NSOrderedSame && [self.delegate respondsToSelector:@selector(calendarView:didChangeVisibleMonth:)]) {
-                [self.delegate calendarView:self didChangeVisibleMonth:self.visibleMonth];
+            if (monthComparisonResult != NSOrderedSame && [self.delegate respondsToSelector:@selector(calendarView:didChangeToVisibleMonth:)]) {
+                [self.delegate calendarView:self didChangeToVisibleMonth:[month copy]];
             }
         }
     }];

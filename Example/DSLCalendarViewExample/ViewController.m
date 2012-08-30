@@ -27,7 +27,7 @@
 
 - (void)viewDidUnload
 {
-    [super viewDidUnload];
+    [super viewDidUnload];t
     // Release any retained subviews of the main view.
 }
 
@@ -76,7 +76,11 @@
     return range;
 }
 
-- (void)calendarView:(DSLCalendarView *)calendarView didChangeVisibleMonth:(NSDateComponents *)month {
+- (void)calendarView:(DSLCalendarView *)calendarView willChangeToVisibleMonth:(NSDateComponents *)month duration:(NSTimeInterval)duration {
+    NSLog(@"Will show %@ in %.3f seconds", month, duration);
+}
+
+- (void)calendarView:(DSLCalendarView *)calendarView didChangeToVisibleMonth:(NSDateComponents *)month {
     NSLog(@"Now showing %@", month);
 }
 
