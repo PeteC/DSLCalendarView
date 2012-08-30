@@ -298,10 +298,6 @@
         self.monthContainerViewContentView.frame = frame;
     }
     
-    if (monthComparisonResult != NSOrderedSame && [self.delegate respondsToSelector:@selector(calendarView:willChangeToVisibleMonth:duration:)]) {
-        [self.delegate calendarView:self willChangeToVisibleMonth:[month copy] duration:animationDuration];
-    }
-    
     [UIView animateWithDuration:animationDuration delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         for (NSInteger index = 0; index < activeMonthViews.count; index++) {
             DSLCalendarMonthView *monthView = [activeMonthViews objectAtIndex:index];
@@ -324,10 +320,16 @@
         frame = self.frame;
         frame.size.height = CGRectGetMaxY(self.monthContainerView.frame);
         self.frame = frame;
+        
+        // Tell the delegate method that we're about to animate to a new month
+        if (monthComparisonResult != NSOrderedSame && [self.delegate respondsToSelector:@selector(calendarView:willChangeToVisibleMonth:duration:)]) {
+            [self.delegate calendarView:self willChangeToVisibleMonth:[month copy] duration:animationDuration];
+        }
     } completion:^(BOOL finished) {
         if (finished) {
             self.userInteractionEnabled = YES;
             
+            // Tell the delegate method that we've animated to a new month
             if (monthComparisonResult != NSOrderedSame && [self.delegate respondsToSelector:@selector(calendarView:didChangeToVisibleMonth:)]) {
                 [self.delegate calendarView:self didChangeToVisibleMonth:[month copy]];
             }
