@@ -38,12 +38,14 @@
 @interface DSLCalendarView : UIView
 
 @property (nonatomic, weak) id<DSLCalendarViewDelegate>delegate;
-@property (nonatomic, strong) NSDateComponents *visibleMonth;
+@property (nonatomic, copy) NSDateComponents *visibleMonth;
 @property (nonatomic, strong) DSLCalendarRange *selectedRange;
 
 + (Class)monthSelectorViewClass;
 + (Class)monthViewClass;
 + (Class)dayViewClass;
+
+- (void)setVisibleMonth:(NSDateComponents *)visibleMonth animated:(BOOL)animated;
 
 @end
 

@@ -55,6 +55,7 @@
 
 @implementation DSLCalendarView {
     CGFloat _dayViewHeight;
+    NSDateComponents *_visibleMonth;
 }
 
 
@@ -89,8 +90,8 @@
 - (void)commonInit {
     _dayViewHeight = 44;
     
-    self.visibleMonth = [[NSCalendar currentCalendar] components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSCalendarCalendarUnit fromDate:[NSDate date]];
-    self.visibleMonth.day = 1;
+    _visibleMonth = [[NSCalendar currentCalendar] components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSCalendarCalendarUnit fromDate:[NSDate date]];
+    _visibleMonth.day = 1;
     
     self.monthSelectorView = [[[self class] monthSelectorViewClass] view];
     self.monthSelectorView.backgroundColor = [UIColor clearColor];
@@ -115,7 +116,7 @@
     self.monthViews = [[NSMutableDictionary alloc] init];
 
     [self updateMonthLabelMonth:self.visibleMonth];
-    [self positionViewsForMonth:self.visibleMonth fromMonth:self.visibleMonth];
+    [self positionViewsForMonth:self.visibleMonth fromMonth:self.visibleMonth animated:NO];
 }
 
 
@@ -152,23 +153,37 @@
     }
 }
 
+- (NSDateComponents*)visibleMonth {
+    return [_visibleMonth copy];
+}
+
+- (void)setVisibleMonth:(NSDateComponents *)visibleMonth {
+    [self setVisibleMonth:visibleMonth animated:NO];
+}
+
+- (void)setVisibleMonth:(NSDateComponents *)visibleMonth animated:(BOOL)animated {
+    NSDateComponents *fromMonth = self.visibleMonth;
+    _visibleMonth = [visibleMonth copy];
+
+    [self updateMonthLabelMonth:self.visibleMonth];
+    [self positionViewsForMonth:self.visibleMonth fromMonth:fromMonth animated:animated];
+}
+
 
 #pragma mark - Events
 
 - (void)didTapMonthBack:(id)sender {
-    NSDateComponents *fromMonth = [self.visibleMonth copy];
-    [self.visibleMonth setMonth:self.visibleMonth.month - 1];
-    
-    [self updateMonthLabelMonth:self.visibleMonth];
-    [self positionViewsForMonth:self.visibleMonth fromMonth:fromMonth];
+    NSDateComponents *newMonth = self.visibleMonth;
+    newMonth.month--;
+
+    [self setVisibleMonth:newMonth animated:YES];
 }
 
 - (void)didTapMonthForward:(id)sender {
-    NSDateComponents *fromMonth = [self.visibleMonth copy];
-    [self.visibleMonth setMonth:self.visibleMonth.month + 1];
-
-    [self updateMonthLabelMonth:self.visibleMonth];
-    [self positionViewsForMonth:self.visibleMonth fromMonth:fromMonth];
+    NSDateComponents *newMonth = self.visibleMonth;
+    newMonth.month--;
+    
+    [self setVisibleMonth:newMonth animated:YES];
 }
 
 
@@ -205,7 +220,7 @@
     return monthView;
 }
 
-- (void)positionViewsForMonth:(NSDateComponents*)month fromMonth:(NSDateComponents*)fromMonth {
+- (void)positionViewsForMonth:(NSDateComponents*)month fromMonth:(NSDateComponents*)fromMonth animated:(BOOL)animated {
     self.userInteractionEnabled = NO;
     fromMonth = [fromMonth copy];
     month = [month copy];
@@ -216,7 +231,7 @@
     CGFloat restingHeight = 0;
     
     NSComparisonResult monthComparisonResult = [month.date compare:fromMonth.date];
-    NSTimeInterval animationDuration = (monthComparisonResult == NSOrderedSame) ? 0.0 : 0.5;
+    NSTimeInterval animationDuration = (monthComparisonResult == NSOrderedSame || !animated) ? 0.0 : 0.5;
     
     NSMutableArray *activeMonthViews = [[NSMutableArray alloc] init];
     
@@ -433,12 +448,11 @@
     
     NSDateComponents *month = [touchedView.day.calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSCalendarCalendarUnit fromDate:touchedView.day.date];
     if (month.year != self.visibleMonth.year || month.month != self.visibleMonth.month) {
-        NSDateComponents *fromMonth = [self.visibleMonth copy];
-        self.visibleMonth.month = month.month;
-        self.visibleMonth.year = month.year;
+        NSDateComponents *fromMonth = self.visibleMonth;
+        self.visibleMonth = month;
         
         [self updateMonthLabelMonth:self.visibleMonth];
-        [self positionViewsForMonth:self.visibleMonth fromMonth:fromMonth];
+        [self positionViewsForMonth:self.visibleMonth fromMonth:fromMonth animated:YES];
     }
 }
 
