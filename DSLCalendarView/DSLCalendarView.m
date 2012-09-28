@@ -406,7 +406,7 @@
         return;
     }
     
-    DSLCalendarRange *newRange = self.selectedRange;
+    DSLCalendarRange *newRange;
     if ([touchedView.day.date compare:self.draggingFixedDay.date] == NSOrderedAscending) {
         newRange = [[DSLCalendarRange alloc] initWithStartDay:touchedView.day endDay:self.draggingFixedDay];
     }
