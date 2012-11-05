@@ -31,6 +31,7 @@
 
 
 #import "DSLCalendarDayView.h"
+#import "NSDate+DSLCalendarView.h"
 
 
 @interface DSLCalendarDayView ()
@@ -38,7 +39,10 @@
 @end
 
 
-@implementation DSLCalendarDayView
+@implementation DSLCalendarDayView {
+    __strong NSDate *_dayAsDate;
+    __strong NSDateComponents *_day;
+}
 
 
 #pragma mark - Memory management
@@ -141,7 +145,8 @@
 }
 
 - (void)setDay:(NSDateComponents *)day {
-    _day = [day copy];
+    _dayAsDate = [day date];
+    _day = nil;
 
     // If this isn't a subclass, set the label
     if ([self isMemberOfClass:[DSLCalendarDayView class]]) {
@@ -149,6 +154,14 @@
             [(UILabel*)self.contentView setText:[NSString stringWithFormat:@"%d", day.day]];
         }
     }
+}
+
+- (NSDateComponents*)day {
+    if (_day == nil) {
+        _day = [_dayAsDate dslCalendarView_day];
+    }
+    
+    return _day;
 }
 
 - (void)setInCurrentMonth:(BOOL)inCurrentMonth {
