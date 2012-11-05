@@ -85,6 +85,8 @@
     NSDate *firstDate = [day.calendar dateFromComponents:day];
     day = [firstDate dslCalendarView_day];
 
+    NSInteger numberOfDaysInMonth = [day.calendar rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:[day date]].length;
+
     NSInteger startColumn = day.weekday - day.calendar.firstWeekday;
     if (startColumn < 0) {
         startColumn += numberOfDaysPerWeek;
@@ -125,7 +127,6 @@
             }
             
             day.day = day.day + 1;
-            day = [day.date dslCalendarView_day];
             
             nextDayViewOrigin.x += [[columnWidths objectAtIndex:column] floatValue];
         }
@@ -133,7 +134,7 @@
         nextDayViewOrigin.x = 0;
         nextDayViewOrigin.y += _dayViewHeight;
         startColumn = 0;
-    } while (day.month == self.month.month);
+    } while (day.day <= numberOfDaysInMonth);
     
     CGRect fullFrame = CGRectZero;
     fullFrame.size.height = nextDayViewOrigin.y;
