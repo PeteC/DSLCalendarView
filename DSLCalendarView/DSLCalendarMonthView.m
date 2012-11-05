@@ -213,8 +213,15 @@
 }
 
 - (NSString*)dayViewKeyForDay:(NSDateComponents*)day {
-    day = [day.date dslCalendarView_day];
-    return [NSString stringWithFormat:@"%d.%d.%d", day.year, day.month, day.day];
+    static NSDateFormatter *formatter;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        formatter = [[NSDateFormatter alloc] init];
+        formatter.dateStyle = NSDateFormatterShortStyle;
+        formatter.timeStyle = NSDateFormatterNoStyle;
+    });
+
+    return [formatter stringFromDate:[day date]];
 }
 
 - (DSLCalendarDayView*)dayViewForDay:(NSDateComponents*)day {
