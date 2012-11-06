@@ -146,10 +146,6 @@
     _draggingStartDay = [draggingStartDay copy];
     if (draggingStartDay == nil) {
         [self.dayCalloutView removeFromSuperview];
-
-        if ([self.delegate respondsToSelector:@selector(calendarView:didSelectRange:)]) {
-            [self.delegate calendarView:self didSelectRange:self.selectedRange];
-        }
     }
 }
 
@@ -219,7 +215,6 @@
 }
 
 - (void)positionViewsForMonth:(NSDateComponents*)month fromMonth:(NSDateComponents*)fromMonth animated:(BOOL)animated {
-    self.userInteractionEnabled = NO;
     fromMonth = [fromMonth copy];
     month = [month copy];
     
@@ -311,6 +306,7 @@
         self.monthContainerViewContentView.frame = frame;
     }
     
+    self.userInteractionEnabled = NO;
     [UIView animateWithDuration:animationDuration delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         for (NSInteger index = 0; index < activeMonthViews.count; index++) {
             DSLCalendarMonthView *monthView = [activeMonthViews objectAtIndex:index];
@@ -342,9 +338,9 @@
             [self.delegate calendarView:self willChangeToVisibleMonth:[month copy] duration:animationDuration];
         }
     } completion:^(BOOL finished) {
+        self.userInteractionEnabled = YES;
+
         if (finished) {
-            self.userInteractionEnabled = YES;
-            
             // Tell the delegate method that we've animated to a new month
             if (monthComparisonResult != NSOrderedSame && [self.delegate respondsToSelector:@selector(calendarView:didChangeToVisibleMonth:)]) {
                 [self.delegate calendarView:self didChangeToVisibleMonth:[month copy]];
@@ -446,14 +442,28 @@
     
     self.draggingStartDay = nil;
     
+    // Check if the user has dragged to a day in an adjacent month
     if (touchedView.day.year != _visibleMonth.year || touchedView.day.month != _visibleMonth.month) {
-        if ([touchedView.dayAsDate compare:_visibleMonth.date] == NSOrderedAscending) {
-            [self didTapMonthBack:nil];
+        // Ask the delegate if it's OK to animate to the adjacent month
+        BOOL animateToAdjacentMonth = YES;
+        if ([self.delegate respondsToSelector:@selector(calendarView:shouldAnimateDragToMonth:)]) {
+            animateToAdjacentMonth = [self.delegate calendarView:self shouldAnimateDragToMonth:[touchedView.dayAsDate dslCalendarView_monthWithCalendar:_visibleMonth.calendar]];
         }
-        else {
-            [self didTapMonthForward:nil];
+        
+        if (animateToAdjacentMonth) {
+            if ([touchedView.dayAsDate compare:_visibleMonth.date] == NSOrderedAscending) {
+                [self didTapMonthBack:nil];
+            }
+            else {
+                [self didTapMonthForward:nil];
+            }
         }
     }
+    
+    if ([self.delegate respondsToSelector:@selector(calendarView:didSelectRange:)]) {
+        [self.delegate calendarView:self didSelectRange:self.selectedRange];
+    }
+
 }
 
 
