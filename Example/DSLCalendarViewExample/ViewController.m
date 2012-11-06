@@ -53,7 +53,7 @@
         return [[DSLCalendarRange alloc] initWithStartDay:day endDay:day];
     }
     else if (NO) { // Don't allow selections before today
-        NSDateComponents *today = [[NSDate date] dslCalendarView_day];
+        NSDateComponents *today = [[NSDate date] dslCalendarView_dayWithCalendar:calendarView.visibleMonth.calendar];
         
         NSDateComponents *startDate = range.startDay;
         NSDateComponents *endDate = range.endDay;

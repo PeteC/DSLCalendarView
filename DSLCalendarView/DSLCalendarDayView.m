@@ -40,6 +40,7 @@
 
 
 @implementation DSLCalendarDayView {
+    __strong NSCalendar *_calendar;
     __strong NSDate *_dayAsDate;
     __strong NSDateComponents *_day;
     __strong NSString *_labelText;
@@ -67,6 +68,7 @@
 }
 
 - (void)setDay:(NSDateComponents *)day {
+    _calendar = [day calendar];
     _dayAsDate = [day date];
     _day = nil;
     _labelText = [NSString stringWithFormat:@"%d", day.day];
@@ -74,7 +76,7 @@
 
 - (NSDateComponents*)day {
     if (_day == nil) {
-        _day = [_dayAsDate dslCalendarView_day];
+        _day = [_dayAsDate dslCalendarView_dayWithCalendar:_calendar];
     }
     
     return _day;

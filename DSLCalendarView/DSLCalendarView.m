@@ -193,9 +193,7 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = @"MMMM yyyy";
     
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDate *date = [calendar dateFromComponents:month];
-    
+    NSDate *date = [month.calendar dateFromComponents:month];
     self.monthSelectorView.titleLabel.text = [formatter stringFromDate:date];
 }
 

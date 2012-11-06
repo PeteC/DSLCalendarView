@@ -9,7 +9,7 @@
 
 @interface NSDate (DSLCalendarView)
 
-- (NSDateComponents*)dslCalendarView_day;
-- (NSDateComponents*)dslCalendarView_month;
+- (NSDateComponents*)dslCalendarView_dayWithCalendar:(NSCalendar*)calendar;
+- (NSDateComponents*)dslCalendarView_monthWithCalendar:(NSCalendar*)calendar;
 
 @end

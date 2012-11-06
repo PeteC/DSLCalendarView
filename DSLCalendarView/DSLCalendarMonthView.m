@@ -83,7 +83,7 @@
     day.year = self.month.year;
     
     NSDate *firstDate = [day.calendar dateFromComponents:day];
-    day = [firstDate dslCalendarView_day];
+    day = [firstDate dslCalendarView_dayWithCalendar:self.month.calendar];
 
     NSInteger numberOfDaysInMonth = [day.calendar rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:[day date]].length;
 
