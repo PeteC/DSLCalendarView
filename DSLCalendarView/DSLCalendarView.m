@@ -115,8 +115,8 @@
     
     self.monthViews = [[NSMutableDictionary alloc] init];
 
-    [self updateMonthLabelMonth:self.visibleMonth];
-    [self positionViewsForMonth:self.visibleMonth fromMonth:self.visibleMonth animated:NO];
+    [self updateMonthLabelMonth:_visibleMonth];
+    [self positionViewsForMonth:_visibleMonth fromMonth:_visibleMonth animated:NO];
 }
 
 
@@ -162,11 +162,11 @@
 }
 
 - (void)setVisibleMonth:(NSDateComponents *)visibleMonth animated:(BOOL)animated {
-    NSDateComponents *fromMonth = self.visibleMonth;
-    _visibleMonth = [visibleMonth copy];
+    NSDateComponents *fromMonth = [_visibleMonth copy];
+    _visibleMonth = [visibleMonth.date dslCalendarView_monthWithCalendar:self.visibleMonth.calendar];
 
-    [self updateMonthLabelMonth:self.visibleMonth];
-    [self positionViewsForMonth:self.visibleMonth fromMonth:fromMonth animated:animated];
+    [self updateMonthLabelMonth:_visibleMonth];
+    [self positionViewsForMonth:_visibleMonth fromMonth:fromMonth animated:animated];
 }
 
 
@@ -446,14 +446,13 @@
     
     self.draggingStartDay = nil;
     
-    
-    NSDateComponents *month = [touchedView.day.calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSCalendarCalendarUnit fromDate:touchedView.day.date];
-    if (month.year != self.visibleMonth.year || month.month != self.visibleMonth.month) {
-        NSDateComponents *fromMonth = self.visibleMonth;
-        self.visibleMonth = month;
-        
-        [self updateMonthLabelMonth:self.visibleMonth];
-        [self positionViewsForMonth:self.visibleMonth fromMonth:fromMonth animated:YES];
+    if (touchedView.day.year != _visibleMonth.year || touchedView.day.month != _visibleMonth.month) {
+        if ([touchedView.dayAsDate compare:_visibleMonth.date] == NSOrderedAscending) {
+            [self didTapMonthBack:nil];
+        }
+        else {
+            [self didTapMonthForward:nil];
+        }
     }
 }
 
