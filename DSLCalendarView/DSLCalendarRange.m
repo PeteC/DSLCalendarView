@@ -38,7 +38,10 @@
 @end
 
 
-@implementation DSLCalendarRange
+@implementation DSLCalendarRange {
+    __strong NSDate *_startDate;
+    __strong NSDate *_endDate;
+}
 
 
 #pragma mark - Memory management
@@ -58,7 +61,9 @@
     if (self != nil) {
         // Initialise properties
         _startDay = [start copy];
+        _startDate = [start date];
         _endDay = [end copy];
+        _endDate = [end date];
     }
 
     return self;
@@ -81,12 +86,14 @@
 #pragma mark
 
 - (BOOL)containsDay:(NSDateComponents*)day {
-    NSDate *dayDate = day.date;
+    return [self containsDate:day.date];
+}
 
-    if ([self.startDay.date compare:dayDate] == NSOrderedDescending) {
+- (BOOL)containsDate:(NSDate*)date {
+    if ([_startDate compare:date] == NSOrderedDescending) {
         return NO;
     }
-    else if ([self.endDay.date compare:dayDate] == NSOrderedAscending) {
+    else if ([_endDate compare:date] == NSOrderedAscending) {
         return NO;
     }
     

@@ -80,6 +80,10 @@
     return _day;
 }
 
+- (NSDate*)dayAsDate {
+    return _dayAsDate;
+}
+
 - (void)setInCurrentMonth:(BOOL)inCurrentMonth {
     _inCurrentMonth = inCurrentMonth;
     [self setNeedsDisplay];

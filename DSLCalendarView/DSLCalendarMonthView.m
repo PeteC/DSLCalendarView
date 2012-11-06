@@ -146,7 +146,7 @@
 
 - (void)updateDaySelectionStatesForRange:(DSLCalendarRange*)range {
     for (DSLCalendarDayView *dayView in self.dayViews) {
-        if ([range containsDay:dayView.day]) {
+        if ([range containsDate:dayView.dayAsDate]) {
             BOOL isStartOfRange = [range.startDay isEqual:dayView.day];
             BOOL isEndOfRange = [range.endDay isEqual:dayView.day];
             

@@ -39,5 +39,6 @@
 - (id)initWithStartDay:(NSDateComponents*)start endDay:(NSDateComponents*)end;
 
 - (BOOL)containsDay:(NSDateComponents*)day;
+- (BOOL)containsDate:(NSDate*)date;
 
 @end
