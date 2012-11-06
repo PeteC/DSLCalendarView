@@ -181,7 +181,7 @@
 
 - (void)didTapMonthForward:(id)sender {
     NSDateComponents *newMonth = self.visibleMonth;
-    newMonth.month--;
+    newMonth.month++;
     
     [self setVisibleMonth:newMonth animated:YES];
 }
