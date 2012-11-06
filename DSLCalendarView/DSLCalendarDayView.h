@@ -47,11 +47,6 @@ enum {
 
 @interface DSLCalendarDayView : UIView
 
-@property (nonatomic, strong) UIView *backgroundView;
-@property (nonatomic, strong) UIView *dimmedBackgroundView;
-@property (nonatomic, strong) UIView *selectedBackgroundView;
-@property (nonatomic, strong) UIView *contentView;
-
 @property (nonatomic, copy) NSDateComponents *day;
 @property (nonatomic, assign) DSLCalendarDayViewPositionInWeek positionInWeek;
 @property (nonatomic, assign) DSLCalendarDayViewSelectionState selectionState;

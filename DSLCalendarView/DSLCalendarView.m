@@ -317,7 +317,10 @@
         for (NSInteger index = 0; index < activeMonthViews.count; index++) {
             DSLCalendarMonthView *monthView = [activeMonthViews objectAtIndex:index];
              for (DSLCalendarDayView *dayView in monthView.dayViews) {
-                 dayView.inCurrentMonth = (index == 2);
+                 // Use a transition so it fades between states nicely
+                 [UIView transitionWithView:dayView duration:animationDuration options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+                     dayView.inCurrentMonth = (index == 2);
+                 } completion:NULL];
              }
         }
         
