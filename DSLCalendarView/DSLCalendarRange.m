@@ -46,8 +46,6 @@
 
 #pragma mark - Memory management
 
-- (void)dealloc {
-}
 
 
 #pragma mark - Initialisation
