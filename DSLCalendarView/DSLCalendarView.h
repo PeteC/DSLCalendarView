@@ -40,6 +40,7 @@
 @property (nonatomic, weak) id<DSLCalendarViewDelegate>delegate;
 @property (nonatomic, copy) NSDateComponents *visibleMonth;
 @property (nonatomic, strong) DSLCalendarRange *selectedRange;
+@property (nonatomic, assign) BOOL showDayCalloutView;
 
 + (Class)monthSelectorViewClass;
 + (Class)monthViewClass;

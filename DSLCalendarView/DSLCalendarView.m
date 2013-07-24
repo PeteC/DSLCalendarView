@@ -91,6 +91,8 @@
     _visibleMonth = [[NSCalendar currentCalendar] components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSCalendarCalendarUnit fromDate:[NSDate date]];
     _visibleMonth.day = 1;
     
+    _showDayCalloutView = YES;
+    
     self.monthSelectorView = [[[self class] monthSelectorViewClass] view];
     self.monthSelectorView.backgroundColor = [UIColor clearColor];
     self.monthSelectorView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
@@ -503,7 +505,7 @@
     if (dayView == nil) {
         [self.dayCalloutView removeFromSuperview];
     }
-    else {
+    else if([self showDayCalloutView]){
         CGRect calloutFrame = [self convertRect:dayView.frame fromView:dayView.superview];
         calloutFrame.origin.y -= calloutFrame.size.height;
         calloutFrame.size.height *= 2;
