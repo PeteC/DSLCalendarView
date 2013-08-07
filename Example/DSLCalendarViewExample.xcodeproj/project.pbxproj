@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		B5294AE615DCF9CF003DB0C2 /* DSLCalendarDayCalloutView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5294AE515DCF9CF003DB0C2 /* DSLCalendarDayCalloutView.m */; };
 		B5294AE915DCFA59003DB0C2 /* DSLCalendarDayCalloutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5294AE815DCFA59003DB0C2 /* DSLCalendarDayCalloutView.xib */; };
+		B534035D17B2583100D1204C /* Example.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B534035B17B2583100D1204C /* Example.storyboard */; };
+		B534036017B2590A00D1204C /* StoryboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B534035F17B2590A00D1204C /* StoryboardViewController.m */; };
 		B5A24DC015D81F3D00F07396 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A24DBF15D81F3D00F07396 /* UIKit.framework */; };
 		B5A24DC215D81F3D00F07396 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A24DC115D81F3D00F07396 /* Foundation.framework */; };
 		B5A24DC415D81F3D00F07396 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A24DC315D81F3D00F07396 /* CoreGraphics.framework */; };
@@ -49,6 +51,9 @@
 		B5294AE415DCF9CF003DB0C2 /* DSLCalendarDayCalloutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSLCalendarDayCalloutView.h; sourceTree = "<group>"; };
 		B5294AE515DCF9CF003DB0C2 /* DSLCalendarDayCalloutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSLCalendarDayCalloutView.m; sourceTree = "<group>"; };
 		B5294AE815DCFA59003DB0C2 /* DSLCalendarDayCalloutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DSLCalendarDayCalloutView.xib; sourceTree = "<group>"; };
+		B534035C17B2583100D1204C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Example.storyboard; sourceTree = "<group>"; };
+		B534035E17B2590A00D1204C /* StoryboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoryboardViewController.h; sourceTree = "<group>"; };
+		B534035F17B2590A00D1204C /* StoryboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoryboardViewController.m; sourceTree = "<group>"; };
 		B5A24DBB15D81F3D00F07396 /* DSLCalendarViewExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DSLCalendarViewExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5A24DBF15D81F3D00F07396 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		B5A24DC115D81F3D00F07396 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -152,6 +157,9 @@
 				B5A24DD115D81F3D00F07396 /* ViewController.h */,
 				B5A24DD215D81F3D00F07396 /* ViewController.m */,
 				B5A24DD415D81F3D00F07396 /* ViewController.xib */,
+				B534035E17B2590A00D1204C /* StoryboardViewController.h */,
+				B534035F17B2590A00D1204C /* StoryboardViewController.m */,
+				B534035B17B2583100D1204C /* Example.storyboard */,
 				B5A24DC615D81F3D00F07396 /* Supporting Files */,
 			);
 			path = DSLCalendarViewExample;
@@ -288,6 +296,7 @@
 				C15EF2FD1649223900318CE2 /* Icon-57.png in Resources */,
 				C15EF2FF1649230700318CE2 /* Default@2x.png in Resources */,
 				C15EF3011649230A00318CE2 /* Default.png in Resources */,
+				B534035D17B2583100D1204C /* Example.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,12 +317,21 @@
 				B5A24DF015D81F9A00F07396 /* DSLCalendarMonthSelectorView.m in Sources */,
 				B5294AE615DCF9CF003DB0C2 /* DSLCalendarDayCalloutView.m in Sources */,
 				B5E17D1615DD5F1E003DEDEA /* NSDate+DSLCalendarView.m in Sources */,
+				B534036017B2590A00D1204C /* StoryboardViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		B534035B17B2583100D1204C /* Example.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B534035C17B2583100D1204C /* en */,
+			);
+			name = Example.storyboard;
+			sourceTree = "<group>";
+		};
 		B5A24DC815D81F3D00F07396 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (

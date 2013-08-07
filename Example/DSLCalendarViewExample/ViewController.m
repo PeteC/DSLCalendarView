@@ -17,22 +17,14 @@
 
 @implementation ViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-    
+
     self.calendarView.delegate = self;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Storyboard" style:UIBarButtonItemStyleBordered target:self action:@selector(didTapShowStoryboardExample:)];
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
@@ -86,6 +78,14 @@
 
 - (BOOL)day:(NSDateComponents*)day1 isBeforeDay:(NSDateComponents*)day2 {
     return ([day1.date compare:day2.date] == NSOrderedAscending);
+}
+
+
+#pragma mark Actions
+
+- (void)didTapShowStoryboardExample:(id)sender {
+    UIViewController *controller = [[UIStoryboard storyboardWithName:@"Example" bundle:nil] instantiateInitialViewController];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 @end
