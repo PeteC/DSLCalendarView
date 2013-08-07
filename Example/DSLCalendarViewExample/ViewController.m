@@ -23,7 +23,6 @@
 	// Do any additional setup after loading the view, typically from a nib.
     
     self.calendarView.delegate = self;
-    self.calendarView.showDayCalloutView = NO;
 }
 
 - (void)viewDidUnload
