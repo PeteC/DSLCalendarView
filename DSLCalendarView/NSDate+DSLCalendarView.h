@@ -6,6 +6,7 @@
 //  Copyright 2012 Pete Callaway. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 
 @interface NSDate (DSLCalendarView)
 
