@@ -71,7 +71,7 @@
     _calendar = [day calendar];
     _dayAsDate = [day date];
     _day = nil;
-    _labelText = [NSString stringWithFormat:@"%d", day.day];
+    _labelText = [NSString stringWithFormat:@"%ld", (long)day.day];
 }
 
 - (NSDateComponents*)day {
