@@ -79,7 +79,7 @@
         [self insertSubview:self.imageView atIndex:0];
     }
     
-    self.titleLabel.text = [NSString stringWithFormat:@"%d", day.day];
+    self.titleLabel.text = [NSString stringWithFormat:@"%ld", (long)day.day];
 
     CGFloat const imagePadding = 15.0;
     CGRect frame = self.frame;
